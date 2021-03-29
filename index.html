@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Description" content="Put your description here.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>INLES</title>
+    <link rel="stylesheet" href="js/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="js/codemirror/addon/scroll/simplescrollbars.css">
+    <link rel="stylesheet" href="js/codemirror/addon/fold/foldgutter.css">
+
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="twilight.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <h1 class="nav__link-container">
+                <a class="nav__link">
+                    <svg class="nav__icon" viewBox="0 0 60 60">
+                        <defs>
+                            <linearGradient id="left" gradientTransform="matrix(1 0 0 -1 0 62)" gradientUnits="userSpaceOnUse" x1="27.048" x2="33.312" y1="62.824" y2="3.448">
+                                <stop offset="0" stop-color="#fcf84a"></stop>
+                                <stop offset=".32" stop-color="#abe682"></stop>
+                                <stop offset=".79" stop-color="#36cdd2"></stop>
+                                <stop offset="1" stop-color="#07c3f2"></stop>
+                            </linearGradient>
+                            <linearGradient id="top" gradientTransform="matrix(1 0 0 -1 0 62)" gradientUnits="userSpaceOnUse" x1="4.068" x2="60.246" y1="61.892" y2="35.243">
+                                <stop offset="0" stop-color="#3bea62"></stop>
+                                <stop offset="1" stop-color="#087cfa"></stop>
+                            </linearGradient>
+                            <linearGradient id="right" gradientTransform="matrix(1 0 0 -1 0 62)" gradientUnits="userSpaceOnUse" x1="9.217" x2="65.779" y1="3.879" y2="43.473">
+                                <stop offset="0" stop-color="#009ae5"></stop>
+                                <stop offset=".18" stop-color="#0490dd"></stop>
+                                <stop offset=".49" stop-color="#1073c6"></stop>
+                                <stop offset=".89" stop-color="#2346a1"></stop>
+                                <stop offset="1" stop-color="#293896"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path d="m10.8618 60a59.95462 59.95462 0 0 0 49.1382-34.4 60.00348 60.00348 0 0 0 -49.1382-25.6c-1.74408 0-3.49616.072-5.24824.232a59.99772 59.99772 0 0 0 5.24824 59.768z" fill="url(#left)"/>
+                        <path d="m5.66956.232a70.65854 70.65854 0 0 1 31.56944 25.368h22.761a59.81147 59.81147 0 0 0 -49.0742-25.6q-2.61612 0-5.25624.232z" fill="url(#top)"/>
+                        <path d="m37.247 25.6c-2.74414 18.104-26.3852 34.4-26.3852 34.4 21.48896-2.04 40.33781-14.92 49.1382-34.4z" fill="url(#right)"/>
+                    </svg>
+                </a>
+            </h1>
+            <div class="nav__inner-container">
+                <div class="nav__title-container">
+                    <h1 class="nav__title">
+                        <span class="nav__title-text">Equation Solver</span>
+                    </h1>
+                    <div class="nav__subtitle">
+                        <a class="nav__subtitle-link" href="https://github.com/">Dmitrii Turygin</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav__actions-container">
+                <button class="toggle-button">
+                    <div class="toggle-button__inner-container">
+                        <span class="toggle-button__line"></span>
+                        <svg class="toggle-button__icon" viewBox="-122.9 121.1 105.9 61.9">
+                            <path d="M-63.2 180.3l43.5-43.5c1.7-1.7 2.7-4 2.7-6.5s-1-4.8-2.7-6.5c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.7L-69.9 161l-37.2-37.2c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.6c-1.9 1.8-2.8 4.2-2.8 6.6 0 2.3.9 4.6 2.6 6.5 11.4 11.5 41 41.2 43 43.3l.2.2c3.6 3.6 10.3 3.6 13.9 0z"/>
+                        </svg>
+                    </div>
+                </button>
+                <div class="nav__actions">
+                    <button class="nav__button nav__button_run">
+                        <svg class="nav__button-icon" viewBox="0 0 100 100">
+                            <path d="M55.702 50.002L77.85 72.324 100 50.002l-9.173-9.249-6.611 6.668C82.878 25.187 64.56 7.5 42.169 7.5 18.916 7.5 0 26.567 0 50.002 0 73.436 18.917 92.5 42.169 92.5h16.218V79.424H42.169c-16.102 0-29.193-13.197-29.193-29.421 0-16.229 13.092-29.426 29.193-29.426 15.08 0 27.37 11.615 28.892 26.41l-6.184-6.233-9.175 9.248z"/>
+                        </svg><span class="nav__button-text">Run</span>
+                    </button>
+                    <button class="nav__button nav__button_settings">
+                        <svg class="nav__button-icon" viewBox="0 0 100 100">
+                            <path d="M87.687 45.077c-.313-2.433-.816-4.807-1.542-7.079l8.145-11.73-5.827-7.515-.094-.123-5.824-7.514-12.955 5.577c-2.041-1.265-4.192-2.362-6.459-3.219L59.42 0H40.586l-3.709 13.474c-2.27.857-4.421 1.955-6.463 3.222l-12.957-5.577-5.825 7.514-.097.124-5.822 7.517 8.146 11.731a39.832 39.832 0 00-1.544 7.079L0 52.032l2.08 9.375.033.15 2.08 9.375 14.001.761a39.157 39.157 0 004.4 5.668l-2.396 14.227 8.416 4.173.138.067L37.169 100l9.309-10.796c1.161.109 2.335.173 3.524.173s2.358-.074 3.52-.184l9.317 10.804 8.415-4.173.141-.066 8.413-4.172-2.396-14.228a39.06 39.06 0 004.4-5.672l14-.759 2.078-9.375.035-.154L100 52.025l-12.313-6.948zM50.003 34.51c8.435 0 15.272 7.035 15.272 15.719 0 8.679-6.839 15.717-15.272 15.717-8.436 0-15.272-7.038-15.272-15.717 0-8.684 6.838-15.719 15.272-15.719z"/>
+                        </svg><span class="nav__button-text nav__button-text_settings">Settings</span>
+                    </button>
+                </div>
+            </div>
+            <button class="nav__button nav__button_sing-up">Sign Up</button>
+            <button class="nav__button nav__button_login">Log In</button>
+        </nav>
+    </header>
+    <section class="modal">
+        <header class="modal__header modal-header">
+            <h2 class="modal-header__title">Pen Settings</h2>
+            <div>
+                <button class="modal-header__close-button">
+                    <svg class="modal-header__close-button-icon" viewBox="0 0 100 100">
+                        <path d="M96.8 83.7L63.1 50l33.7-33.7c3.6-3.6 3.6-9.4 0-13.1s-9.5-3.6-13.1 0L50 36.9 16.3 3.2C12.7-.4 6.9-.4 3.2 3.2s-3.6 9.5 0 13.1L36.9 50 3.2 83.7c-3.6 3.6-3.6 9.4 0 13.1s9.5 3.6 13.1 0L50 63.1l33.7 33.7c3.6 3.6 9.4 3.6 13.1 0s3.6-9.5 0-13.1z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+        <article class="modal__article">
+            <nav class="modal__nav">
+                <div class="modal__inner-container">
+                    <button class="modal__button modal__button_active" tabindex="1">Settings</button>
+                    <button class="modal__button" tabindex="1">Guess Values</button>
+                </div>
+            </nav>
+            <div class="modal__tab modal__tab_active">
+                <form class="modal__form form">
+                    <h4 class="form__title">
+                        <label class="form__label" for="trigonometry-mode">
+                            Trigonometry mode
+                        </label>
+                    </h4>
+                    <div class="form__help-container">
+                        <svg class="form__help-icon" viewBox="0 0 100 100">
+                            <path d="M75 0H25C11.19 0 0 11.193 0 25v50c0 13.802 11.19 25 25 25h50c13.811 0 25-11.198 25-25V25c0-13.807-11.189-25-25-25zM57.203 85.067H41.504V72.542h15.699v12.525zm16.154-43.026c-.84 2.066-1.873 3.834-3.102 5.298a20.59 20.59 0 01-4.101 3.751 91.479 91.479 0 00-4.249 3.101c-1.333 1.034-1.553 2.214-2.596 3.547-1.025 1.335-.977 3.004-.977 5.006v3.924H41.668v-4.623c0-2.864 1.366-5.265 2.27-7.202.896-1.935 2.255-3.581 3.459-4.947 1.196-1.367 2.62-2.556 3.955-3.557 1.327-.993 2.637-1.993 3.776-2.995 1.123-1.001 2.083-2.1 2.783-3.304.7-1.197 1.043-2.694.977-4.5 0-3.06-.74-5.33-2.245-6.795-1.498-1.465-3.582-2.206-6.25-2.206-1.8 0-3.337.351-4.639 1.05a9.172 9.172 0 00-3.199 2.808c-.837 1.163-1.448 3.593-1.847 5.156-.407 1.57-.602 6.115-.602 6.115H25.399c.073-8.333.684-7.963 1.855-10.965 1.164-2.995 2.8-6.132 4.899-8.33 2.099-2.197 4.63-4.179 7.601-5.417a25.782 25.782 0 019.945-1.977c4.736 0 8.683.581 11.856 1.876 3.167 1.302 5.713 2.889 7.65 4.817 1.929 1.937 3.312 4.004 4.149 6.234.831 2.237 1.245 4.313 1.245 6.242.002 3.206-.412 5.827-1.242 7.893z"/>
+                        </svg>
+                    </div>
+                    <div class="form__select-container">
+                        <select class="form__select" id="trigonometry-mode">
+                            <option value="radians">Radians</option>
+                            <option value="degrees">Degrees</option>
+                        </select>
+                        <div class="form__select-icon-container">
+                            <svg class="form__select-icon form__select-icon_up" viewBox="-122.9 121.1 105.9 61.9">
+                                <path d="M-63.2 180.3l43.5-43.5c1.7-1.7 2.7-4 2.7-6.5s-1-4.8-2.7-6.5c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.7L-69.9 161l-37.2-37.2c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.6c-1.9 1.8-2.8 4.2-2.8 6.6 0 2.3.9 4.6 2.6 6.5 11.4 11.5 41 41.2 43 43.3l.2.2c3.6 3.6 10.3 3.6 13.9 0z"/>
+                            </svg>
+                            <svg class="form__select-icon" viewBox="-122.9 121.1 105.9 61.9">
+                                <path d="M-63.2 180.3l43.5-43.5c1.7-1.7 2.7-4 2.7-6.5s-1-4.8-2.7-6.5c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.7L-69.9 161l-37.2-37.2c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.6c-1.9 1.8-2.8 4.2-2.8 6.6 0 2.3.9 4.6 2.6 6.5 11.4 11.5 41 41.2 43 43.3l.2.2c3.6 3.6 10.3 3.6 13.9 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </form>
+                <form class="modal__form form">
+                    <h4 class="form__title">
+                        <label class="form__label" for="x-tolerance">
+                            X Tolerance
+                        </label>
+                    </h4>
+                    <div class="form__help-container">
+                        <svg class="form__help-icon" viewBox="0 0 100 100">
+                            <path d="M75 0H25C11.19 0 0 11.193 0 25v50c0 13.802 11.19 25 25 25h50c13.811 0 25-11.198 25-25V25c0-13.807-11.189-25-25-25zM57.203 85.067H41.504V72.542h15.699v12.525zm16.154-43.026c-.84 2.066-1.873 3.834-3.102 5.298a20.59 20.59 0 01-4.101 3.751 91.479 91.479 0 00-4.249 3.101c-1.333 1.034-1.553 2.214-2.596 3.547-1.025 1.335-.977 3.004-.977 5.006v3.924H41.668v-4.623c0-2.864 1.366-5.265 2.27-7.202.896-1.935 2.255-3.581 3.459-4.947 1.196-1.367 2.62-2.556 3.955-3.557 1.327-.993 2.637-1.993 3.776-2.995 1.123-1.001 2.083-2.1 2.783-3.304.7-1.197 1.043-2.694.977-4.5 0-3.06-.74-5.33-2.245-6.795-1.498-1.465-3.582-2.206-6.25-2.206-1.8 0-3.337.351-4.639 1.05a9.172 9.172 0 00-3.199 2.808c-.837 1.163-1.448 3.593-1.847 5.156-.407 1.57-.602 6.115-.602 6.115H25.399c.073-8.333.684-7.963 1.855-10.965 1.164-2.995 2.8-6.132 4.899-8.33 2.099-2.197 4.63-4.179 7.601-5.417a25.782 25.782 0 019.945-1.977c4.736 0 8.683.581 11.856 1.876 3.167 1.302 5.713 2.889 7.65 4.817 1.929 1.937 3.312 4.004 4.149 6.234.831 2.237 1.245 4.313 1.245 6.242.002 3.206-.412 5.827-1.242 7.893z"/>
+                        </svg>
+                    </div>
+                    <input class="form__input" id="x-tolerance" type="number" value="1e-8">
+                </form>
+                <form class="modal__form form">
+                    <h4 class="form__title">
+                        <label class="form__label" for="max-iteration">
+                            Max Iterations
+                        </label>
+                    </h4>
+                    <div class="form__help-container">
+                        <svg class="form__help-icon" viewBox="0 0 100 100">
+                            <path d="M75 0H25C11.19 0 0 11.193 0 25v50c0 13.802 11.19 25 25 25h50c13.811 0 25-11.198 25-25V25c0-13.807-11.189-25-25-25zM57.203 85.067H41.504V72.542h15.699v12.525zm16.154-43.026c-.84 2.066-1.873 3.834-3.102 5.298a20.59 20.59 0 01-4.101 3.751 91.479 91.479 0 00-4.249 3.101c-1.333 1.034-1.553 2.214-2.596 3.547-1.025 1.335-.977 3.004-.977 5.006v3.924H41.668v-4.623c0-2.864 1.366-5.265 2.27-7.202.896-1.935 2.255-3.581 3.459-4.947 1.196-1.367 2.62-2.556 3.955-3.557 1.327-.993 2.637-1.993 3.776-2.995 1.123-1.001 2.083-2.1 2.783-3.304.7-1.197 1.043-2.694.977-4.5 0-3.06-.74-5.33-2.245-6.795-1.498-1.465-3.582-2.206-6.25-2.206-1.8 0-3.337.351-4.639 1.05a9.172 9.172 0 00-3.199 2.808c-.837 1.163-1.448 3.593-1.847 5.156-.407 1.57-.602 6.115-.602 6.115H25.399c.073-8.333.684-7.963 1.855-10.965 1.164-2.995 2.8-6.132 4.899-8.33 2.099-2.197 4.63-4.179 7.601-5.417a25.782 25.782 0 019.945-1.977c4.736 0 8.683.581 11.856 1.876 3.167 1.302 5.713 2.889 7.65 4.817 1.929 1.937 3.312 4.004 4.149 6.234.831 2.237 1.245 4.313 1.245 6.242.002 3.206-.412 5.827-1.242 7.893z"/>
+                        </svg>
+                    </div>
+                    <input class="form__input" id="max-iteration" type="number" value="0">
+                </form>
+                <form class="modal__form form">
+                    <h4 class="form__title">
+                        <label class="form__label" for="finite-difference-step">
+                            Finite Difference Step
+                        </label>
+                    </h4>
+                    <div class="form__help-container">
+                        <svg class="form__help-icon" viewBox="0 0 100 100">
+                            <path d="M75 0H25C11.19 0 0 11.193 0 25v50c0 13.802 11.19 25 25 25h50c13.811 0 25-11.198 25-25V25c0-13.807-11.189-25-25-25zM57.203 85.067H41.504V72.542h15.699v12.525zm16.154-43.026c-.84 2.066-1.873 3.834-3.102 5.298a20.59 20.59 0 01-4.101 3.751 91.479 91.479 0 00-4.249 3.101c-1.333 1.034-1.553 2.214-2.596 3.547-1.025 1.335-.977 3.004-.977 5.006v3.924H41.668v-4.623c0-2.864 1.366-5.265 2.27-7.202.896-1.935 2.255-3.581 3.459-4.947 1.196-1.367 2.62-2.556 3.955-3.557 1.327-.993 2.637-1.993 3.776-2.995 1.123-1.001 2.083-2.1 2.783-3.304.7-1.197 1.043-2.694.977-4.5 0-3.06-.74-5.33-2.245-6.795-1.498-1.465-3.582-2.206-6.25-2.206-1.8 0-3.337.351-4.639 1.05a9.172 9.172 0 00-3.199 2.808c-.837 1.163-1.448 3.593-1.847 5.156-.407 1.57-.602 6.115-.602 6.115H25.399c.073-8.333.684-7.963 1.855-10.965 1.164-2.995 2.8-6.132 4.899-8.33 2.099-2.197 4.63-4.179 7.601-5.417a25.782 25.782 0 019.945-1.977c4.736 0 8.683.581 11.856 1.876 3.167 1.302 5.713 2.889 7.65 4.817 1.929 1.937 3.312 4.004 4.149 6.234.831 2.237 1.245 4.313 1.245 6.242.002 3.206-.412 5.827-1.242 7.893z"/>
+                        </svg>
+                    </div>
+                    <input class="form__input" id="finite-difference-step" type="number" value="0.01">
+                </form>
+                <form class="modal__form form">
+                    <h4 class="form__title">
+                        <label class="form__label" for="decimal-places">
+                            Decimal Places
+                        </label>
+                    </h4>
+                    <div class="form__help-container">
+                        <svg class="form__help-icon" viewBox="0 0 100 100">
+                            <path d="M75 0H25C11.19 0 0 11.193 0 25v50c0 13.802 11.19 25 25 25h50c13.811 0 25-11.198 25-25V25c0-13.807-11.189-25-25-25zM57.203 85.067H41.504V72.542h15.699v12.525zm16.154-43.026c-.84 2.066-1.873 3.834-3.102 5.298a20.59 20.59 0 01-4.101 3.751 91.479 91.479 0 00-4.249 3.101c-1.333 1.034-1.553 2.214-2.596 3.547-1.025 1.335-.977 3.004-.977 5.006v3.924H41.668v-4.623c0-2.864 1.366-5.265 2.27-7.202.896-1.935 2.255-3.581 3.459-4.947 1.196-1.367 2.62-2.556 3.955-3.557 1.327-.993 2.637-1.993 3.776-2.995 1.123-1.001 2.083-2.1 2.783-3.304.7-1.197 1.043-2.694.977-4.5 0-3.06-.74-5.33-2.245-6.795-1.498-1.465-3.582-2.206-6.25-2.206-1.8 0-3.337.351-4.639 1.05a9.172 9.172 0 00-3.199 2.808c-.837 1.163-1.448 3.593-1.847 5.156-.407 1.57-.602 6.115-.602 6.115H25.399c.073-8.333.684-7.963 1.855-10.965 1.164-2.995 2.8-6.132 4.899-8.33 2.099-2.197 4.63-4.179 7.601-5.417a25.782 25.782 0 019.945-1.977c4.736 0 8.683.581 11.856 1.876 3.167 1.302 5.713 2.889 7.65 4.817 1.929 1.937 3.312 4.004 4.149 6.234.831 2.237 1.245 4.313 1.245 6.242.002 3.206-.412 5.827-1.242 7.893z"/>
+                        </svg>
+                    </div>
+                    <input class="form__input" id="decimal-places" type="number" value="3">
+                </form>
+            </div>
+            <div class="modal__tab">
+                <form class="modal__form form">
+                    <h4 class="form__title">
+                        <label class="form__label" for="guess-value-a">
+                            Input a
+                        </label>
+                    </h4>
+                    <div class="form__help-container">
+                        <svg class="form__help-icon" viewBox="0 0 100 100">
+                            <path d="M75 0H25C11.19 0 0 11.193 0 25v50c0 13.802 11.19 25 25 25h50c13.811 0 25-11.198 25-25V25c0-13.807-11.189-25-25-25zM57.203 85.067H41.504V72.542h15.699v12.525zm16.154-43.026c-.84 2.066-1.873 3.834-3.102 5.298a20.59 20.59 0 01-4.101 3.751 91.479 91.479 0 00-4.249 3.101c-1.333 1.034-1.553 2.214-2.596 3.547-1.025 1.335-.977 3.004-.977 5.006v3.924H41.668v-4.623c0-2.864 1.366-5.265 2.27-7.202.896-1.935 2.255-3.581 3.459-4.947 1.196-1.367 2.62-2.556 3.955-3.557 1.327-.993 2.637-1.993 3.776-2.995 1.123-1.001 2.083-2.1 2.783-3.304.7-1.197 1.043-2.694.977-4.5 0-3.06-.74-5.33-2.245-6.795-1.498-1.465-3.582-2.206-6.25-2.206-1.8 0-3.337.351-4.639 1.05a9.172 9.172 0 00-3.199 2.808c-.837 1.163-1.448 3.593-1.847 5.156-.407 1.57-.602 6.115-.602 6.115H25.399c.073-8.333.684-7.963 1.855-10.965 1.164-2.995 2.8-6.132 4.899-8.33 2.099-2.197 4.63-4.179 7.601-5.417a25.782 25.782 0 019.945-1.977c4.736 0 8.683.581 11.856 1.876 3.167 1.302 5.713 2.889 7.65 4.817 1.929 1.937 3.312 4.004 4.149 6.234.831 2.237 1.245 4.313 1.245 6.242.002 3.206-.412 5.827-1.242 7.893z"/>
+                        </svg>
+                    </div>
+                    <input class="form__input" id="guess-value-a" type="number" value="1">
+                </form>
+            </div>
+        </article>
+        <footer class="modal-footer">
+            <div class="modal-footer__inner-container">
+                <input class="modal-footer__close-input" type="button" value="Close">
+            </div>
+        </footer>
+    </section>
+    <main class="main">
+        <nav class="main-nav">
+            <button class="main-nav__button main-nav__button_selected">
+                Editor
+            </button>
+            <button class="main-nav__button">
+                Result
+            </button>
+            <button class="main-nav__button">
+                Graph
+            </button>
+        </nav>
+        <section class="main__inner-container">
+            <div class="main__horizontal-resizer main__horizontal-resizer_editor">
+                <h2 class="main__title main__title_horizontal">
+                    <span>Editor</span>
+                </h2>
+            </div>
+            <section class="main__editor-container main__editor-container_selected">
+                <header class="main__actions">
+                    <div class="main__actions_left">
+                        <button class="main__button main__button_action">
+                            <svg class="main__button-icon" viewBox="0 0 100 100">
+                                <path d="M87.687 45.077c-.313-2.433-.816-4.807-1.542-7.079l8.145-11.73-5.827-7.515-.094-.123-5.824-7.514-12.955 5.577c-2.041-1.265-4.192-2.362-6.459-3.219L59.42 0H40.586l-3.709 13.474c-2.27.857-4.421 1.955-6.463 3.222l-12.957-5.577-5.825 7.514-.097.124-5.822 7.517 8.146 11.731a39.832 39.832 0 00-1.544 7.079L0 52.032l2.08 9.375.033.15 2.08 9.375 14.001.761a39.157 39.157 0 004.4 5.668l-2.396 14.227 8.416 4.173.138.067L37.169 100l9.309-10.796c1.161.109 2.335.173 3.524.173s2.358-.074 3.52-.184l9.317 10.804 8.415-4.173.141-.066 8.413-4.172-2.396-14.228a39.06 39.06 0 004.4-5.672l14-.759 2.078-9.375.035-.154L100 52.025l-12.313-6.948zM50.003 34.51c8.435 0 15.272 7.035 15.272 15.719 0 8.679-6.839 15.717-15.272 15.717-8.436 0-15.272-7.038-15.272-15.717 0-8.684 6.838-15.719 15.272-15.719z"/>
+                            </svg>
+                        </button>
+                        <h2 class="main__title">
+                            <span class="main__title-text">Editor</span>
+                        </h2>
+                    </div>
+                    <div class="main__actions_right">
+                        <button class="main__button button_dropdown" data-dropdown-button-number="0">
+                            <svg class="main__button-icon" viewBox="-122.9 121.1 105.9 61.9" data-dropdown-button-number="0">
+                                <path d="M-63.2 180.3l43.5-43.5c1.7-1.7 2.7-4 2.7-6.5s-1-4.8-2.7-6.5c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.7L-69.9 161l-37.2-37.2c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.6c-1.9 1.8-2.8 4.2-2.8 6.6 0 2.3.9 4.6 2.6 6.5 11.4 11.5 41 41.2 43 43.3l.2.2c3.6 3.6 10.3 3.6 13.9 0z" data-dropdown-button-number="0"/>
+                            </svg>
+                        </button>
+                        <ul class="dropdown">
+                            <li>
+                                <label class="dropdown__button" tabindex="0">
+                                    <input class="dropdown__input" type="file">Load File
+                                </label>
+                            </li>
+                            <li>
+                                <button class="dropdown__button">Download File</button>
+                            </li>
+                        </ul>
+                    </div>
+                </header>
+                <article class="editor">
+                    <form class="editor__form">
+                        <textarea class="editor__textarea" id="code" name="code">
+<div class="images-basic">
+  <div>
+    <img src="https://assets.codepen.io/1025350/eleanor.jpg" alt="Eleanor from The Good Place" />
+  </div>
+  <div>
+    <img src="https://assets.codepen.io/1025350/chidi.jpg" alt="Chidi from The Good Place" />
+  </div>
+  <div>
+    <img src="https://assets.codepen.io/1025350/jason.jpg" alt="Jason from The Good Place" />
+  </div>
+  <div>
+    <img src="https://assets.codepen.io/1025350/tahani.jpg" alt="Tahani from The Good Place" />
+  </div>
+</div>
+
+<div class="images-leaning">
+  <div>
+    <img src="https://assets.codepen.io/1025350/eleanor.jpg" alt="Eleanor from The Good Place" />
+  </div>
+  <div>
+    <img src="https://assets.codepen.io/1025350/chidi.jpg" alt="Chidi from The Good Place" />
+  </div>
+  <div>
+    <img src="https://assets.codepen.io/1025350/jason.jpg" alt="Jason from The Good Place" />
+  </div>
+  <div>
+    <img src="https://assets.codepen.io/1025350/tahani.jpg" alt="Tahani from The Good Place" />
+  </div>
+</div>
+                        </textarea>
+                    </form>
+                </article>
+            </section>
+            <div class="main__horizontal-resizer main__horizontal-resizer_result">
+                <h2 class="main__title main__title_horizontal">
+                    <span>Result</span>
+                </h2>
+            </div>
+            <section class="main__editor-container">
+                <header class="main__actions">
+                    <div class="main__actions_left">
+                        <button class="main__button main__button_action">
+                            <svg class="main__button-icon" viewBox="0 0 100 100">
+                                <path d="M87.687 45.077c-.313-2.433-.816-4.807-1.542-7.079l8.145-11.73-5.827-7.515-.094-.123-5.824-7.514-12.955 5.577c-2.041-1.265-4.192-2.362-6.459-3.219L59.42 0H40.586l-3.709 13.474c-2.27.857-4.421 1.955-6.463 3.222l-12.957-5.577-5.825 7.514-.097.124-5.822 7.517 8.146 11.731a39.832 39.832 0 00-1.544 7.079L0 52.032l2.08 9.375.033.15 2.08 9.375 14.001.761a39.157 39.157 0 004.4 5.668l-2.396 14.227 8.416 4.173.138.067L37.169 100l9.309-10.796c1.161.109 2.335.173 3.524.173s2.358-.074 3.52-.184l9.317 10.804 8.415-4.173.141-.066 8.413-4.172-2.396-14.228a39.06 39.06 0 004.4-5.672l14-.759 2.078-9.375.035-.154L100 52.025l-12.313-6.948zM50.003 34.51c8.435 0 15.272 7.035 15.272 15.719 0 8.679-6.839 15.717-15.272 15.717-8.436 0-15.272-7.038-15.272-15.717 0-8.684 6.838-15.719 15.272-15.719z"/>
+                            </svg>
+                        </button>
+                        <h2 class="main__title">
+                            <span class="main__title-text">Result</span>
+                        </h2>
+                    </div>
+                    <div class="main__actions_right">
+                        <button class="main__button button_dropdown" data-dropdown-button-number="1">
+                            <svg class="main__button-icon" viewBox="-122.9 121.1 105.9 61.9" data-dropdown-button-number="1">
+                                <path d="M-63.2 180.3l43.5-43.5c1.7-1.7 2.7-4 2.7-6.5s-1-4.8-2.7-6.5c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.7L-69.9 161l-37.2-37.2c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.6c-1.9 1.8-2.8 4.2-2.8 6.6 0 2.3.9 4.6 2.6 6.5 11.4 11.5 41 41.2 43 43.3l.2.2c3.6 3.6 10.3 3.6 13.9 0z" data-dropdown-button-number="1"/>
+                            </svg>
+                        </button>
+                        <ul class="dropdown">
+                            <li>
+                                <label class="dropdown__button" tabindex="0">
+                                    <input class="dropdown__input" type="file">Load File
+                                </label>
+                            </li>
+                            <li>
+                                <button class="dropdown__button">Download File</button>
+                            </li>
+                        </ul>
+                    </div>
+                </header>
+                <article class="editor">
+                    <form class="editor__form">
+                        <textarea class="editor__textarea" id="solution" name="solution">
+$bg-color = #eee
+$card-transform = perspective(20em) rotateY(1deg) rotateZ(-5deg) skewY(-2deg) skewX(-1deg) scaleX(var(--resize))
+$body-w = 800px
+
+.images-leaning
+  box-sizing: border-box
+  width: 100%
+  min-width: $body-w
+  margin: 10em auto 0
+  min-height: 330px
+  position: relative
+  background-repeat: no-repeat
+  background-image: linear-gradient(352deg, transparent 45.2%,
+                                            #bbb        45.5%,
+                                            #bbb        45.6%,
+                                            #ccc        45.8%,
+                                            $bg-color   60.0%),
+                    linear-gradient(30deg, #ccc, #eee 90%)
+  background-size: 100% 32.4em
+  background-position: 50% 100%
+
+  > div
+    width: 250px
+    position: absolute
+    left: 50%
+    bottom: 7.8em
+    z-index: 0
+    display: flex
+    justify-content: flex-end
+    // shadows
+    &:before
+      content: ''
+      width: 60%
+      height: 100%
+      position: absolute
+      left: 0
+      top: 7%
+      z-index: 1
+      background-repeat: no-repeat
+      background-image: linear-gradient(120deg, transparent 42%,
+                                                alpha(black,.15) 45%,
+                                                alpha(black,.35) 65%),
+                        linear-gradient( 20deg, transparent 38%,
+                                                alpha(black,.25) 45%,
+                                                alpha(black,.23) 55%,
+                                                alpha(black,.13) 75%),
+                        radial-gradient(ellipse at 50% 100%, alpha(black,.15) 3%, transparent 40%)
+      transform: rotate(-8deg)
+    // shading on image
+    &:after
+      content: ''
+      width: 60%
+      height: 100%
+      position: absolute
+      z-index: 3
+      background-image: linear-gradient(45deg, alpha(black,.3), transparent 70%),
+                        linear-gradient(45deg, alpha(white,0) 60%, alpha(white,.3) 80%)
+      transform: $card-transform
+
+    > img
+      width: 60%
+      height: 100%
+      display: block
+      position: relative
+      z-index: 2
+      border-left: .2em solid
+      border-image: linear-gradient(105deg, transparent .5%, #aaa .7%) 1
+      box-shadow: .1em .2em 0 -.1em #666
+      filter: saturate(90%)
+      transform: $card-transform
+
+    &:nth-of-type(4)
+      --resize: .99
+      margin-left: -40.4em
+      &:before
+        background-size: 100% 85%, 100% 15%, 100% 10%
+        background-position: .1em 0, 0 100%, -3em 83%
+    &:nth-of-type(3)
+      --resize: .96
+      margin-left: -15.3em
+      transform: scaleY(.98) translate(-8em,-2.1em)
+      &:before
+        background-size: 100% 84%, 100% 16%, 100% 10%
+        background-position: .4em 0, 0 100%, -3em 81%
+    &:nth-of-type(2)
+      --resize: .925
+      margin-left: 10em
+      transform: scaleY(.965) translate(-17em,-4.2em)
+      &:before
+        background-size: 100% 83%, 100% 17%, 100% 10%
+        background-position: .6em 0, .1em 100%, -3em 81%
+    &:nth-of-type(1)
+      --resize: .895
+      margin-left: 35.2em
+      transform: scaleY(.94) translate(-26.6em,-6.2em)
+      &:before
+        background-size: 100% 82%, 100% 18%, 100% 10%
+        background-position: .8em 0, .1em 100%, -3em 80%
+
+html,
+body
+  min-height: 100vh
+  min-width: $body-w
+
+body
+  margin: 0 auto
+  padding: 0
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  background-color: $bg-color
+  font-size: 10px
+
+.images-basic
+  width: 600px
+  padding: 5em 0
+  margin: 0 auto
+  display: flex
+  justify-content: space-between
+  flex-direction: row-reverse
+  > div
+    width: 130px
+  img
+    width: 100%
+    display: block
+                        </textarea>
+                    </form>
+                </article>
+            </section>
+            <div class="main__horizontal-resizer main__horizontal-resizer_graph">
+                <h2 class="main__title main__title_horizontal">
+                    <span>Graph</span>
+                </h2>
+            </div>
+            <section class="main__editor-container">
+                <header class="main__actions">
+                    <div class="main__actions_left">
+                        <button class="main__button main__button_action">
+                            <svg class="main__button-icon" viewBox="0 0 100 100">
+                                <path d="M87.687 45.077c-.313-2.433-.816-4.807-1.542-7.079l8.145-11.73-5.827-7.515-.094-.123-5.824-7.514-12.955 5.577c-2.041-1.265-4.192-2.362-6.459-3.219L59.42 0H40.586l-3.709 13.474c-2.27.857-4.421 1.955-6.463 3.222l-12.957-5.577-5.825 7.514-.097.124-5.822 7.517 8.146 11.731a39.832 39.832 0 00-1.544 7.079L0 52.032l2.08 9.375.033.15 2.08 9.375 14.001.761a39.157 39.157 0 004.4 5.668l-2.396 14.227 8.416 4.173.138.067L37.169 100l9.309-10.796c1.161.109 2.335.173 3.524.173s2.358-.074 3.52-.184l9.317 10.804 8.415-4.173.141-.066 8.413-4.172-2.396-14.228a39.06 39.06 0 004.4-5.672l14-.759 2.078-9.375.035-.154L100 52.025l-12.313-6.948zM50.003 34.51c8.435 0 15.272 7.035 15.272 15.719 0 8.679-6.839 15.717-15.272 15.717-8.436 0-15.272-7.038-15.272-15.717 0-8.684 6.838-15.719 15.272-15.719z"/>
+                            </svg>
+                        </button>
+                        <h2 class="main__title">
+                            <span class="main__title-text">Graph</span>
+                        </h2>
+                    </div>
+                    <div class="main__actions_right">
+                        <button class="main__button button_dropdown" data-dropdown-button-number="2">
+                            <svg class="main__button-icon" viewBox="-122.9 121.1 105.9 61.9" data-dropdown-button-number="2">
+                                <path d="M-63.2 180.3l43.5-43.5c1.7-1.7 2.7-4 2.7-6.5s-1-4.8-2.7-6.5c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.7L-69.9 161l-37.2-37.2c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.6c-1.9 1.8-2.8 4.2-2.8 6.6 0 2.3.9 4.6 2.6 6.5 11.4 11.5 41 41.2 43 43.3l.2.2c3.6 3.6 10.3 3.6 13.9 0z" data-dropdown-button-number="2"/>
+                            </svg>
+                        </button>
+                        <ul class="dropdown">
+                            <li>
+                                <label class="dropdown__button" tabindex="0">
+                                    <input class="dropdown__input" type="file">Load File
+                                </label>
+                            </li>
+                            <li>
+                                <button class="dropdown__button">Download File</button>
+                            </li>
+                        </ul>
+                    </div>
+                </header>
+                <article class="editor">
+                    <form class="editor__form">
+                        <textarea class="editor__textarea" id="graph" name="graph">
+// @lynnandtonic
+// a.singlediv.com
+                        </textarea>
+                    </form>
+                </article>
+            </section>
+        </section>
+        <div class="main__vertical-resizer main__vertical-resizer_console-close"></div>
+        <section class="console">
+            <div class="console__resizer"></div>
+            <header class="console__actions-container">
+                <div class="console__actions-left">
+                    <h2 class="console__title">Console</h2>
+                </div>
+                <div class="console__actions-right">
+                    <button class="console__button">Clear</button>
+                    <button class="console__button console__button_close">
+                        <svg class="console__button-icon" viewBox="0 0 100 100">
+                            <path d="M96.8 83.7L63.1 50l33.7-33.7c3.6-3.6 3.6-9.4 0-13.1s-9.5-3.6-13.1 0L50 36.9 16.3 3.2C12.7-.4 6.9-.4 3.2 3.2s-3.6 9.5 0 13.1L36.9 50 3.2 83.7c-3.6 3.6-3.6 9.4 0 13.1s9.5 3.6 13.1 0L50 63.1l33.7 33.7c3.6 3.6 9.4 3.6 13.1 0s3.6-9.5 0-13.1z"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+            <article class="console__inner-container">
+                <div class="console__entries"></div>
+                <div class="console__command-line">
+                    <span class="console__arrow"></span>
+                    <textarea class="console-command-line-input" rows="1"></textarea>
+                </div>
+            </article>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer__inner-container">
+            <div class="footer__actions">
+                <button class="footer__button footer__button_console">Console</button>
+                <button class="footer__button footer__button_shortcuts">
+                    <span class="footer__ctrl-keys">Ctrl</span>
+                </button>
+            </div>
+            <select class="footer__button footer__button_zoom">
+                <option value="1.0">1.0×</option>
+                <option value="0.5">0.5×</option>
+                <option value="0.25">0.25×</option>
+            </select>
+        </div>
+        <div class="footer__inner-container footer__inner-container_right">
+            <button class="footer__button footer__button_right">Fork</button>
+            <button class="footer__button footer__button_right footer__button_export">Export</button>
+            <section class="footer__export export">
+                <h4 class="export__title">
+                    Export
+                    <a class="export__question">
+                        <svg class="export__question-icon" viewBox="0 0 100 100">
+                            <path d="M75 0H25C11.19 0 0 11.193 0 25v50c0 13.802 11.19 25 25 25h50c13.811 0 25-11.198 25-25V25c0-13.807-11.189-25-25-25zM57.203 85.067H41.504V72.542h15.699v12.525zm16.154-43.026c-.84 2.066-1.873 3.834-3.102 5.298a20.59 20.59 0 01-4.101 3.751 91.479 91.479 0 00-4.249 3.101c-1.333 1.034-1.553 2.214-2.596 3.547-1.025 1.335-.977 3.004-.977 5.006v3.924H41.668v-4.623c0-2.864 1.366-5.265 2.27-7.202.896-1.935 2.255-3.581 3.459-4.947 1.196-1.367 2.62-2.556 3.955-3.557 1.327-.993 2.637-1.993 3.776-2.995 1.123-1.001 2.083-2.1 2.783-3.304.7-1.197 1.043-2.694.977-4.5 0-3.06-.74-5.33-2.245-6.795-1.498-1.465-3.582-2.206-6.25-2.206-1.8 0-3.337.351-4.639 1.05a9.172 9.172 0 00-3.199 2.808c-.837 1.163-1.448 3.593-1.847 5.156-.407 1.57-.602 6.115-.602 6.115H25.399c.073-8.333.684-7.963 1.855-10.965 1.164-2.995 2.8-6.132 4.899-8.33 2.099-2.197 4.63-4.179 7.601-5.417a25.782 25.782 0 019.945-1.977c4.736 0 8.683.581 11.856 1.876 3.167 1.302 5.713 2.889 7.65 4.817 1.929 1.937 3.312 4.004 4.149 6.234.831 2.237 1.245 4.313 1.245 6.242.002 3.206-.412 5.827-1.242 7.893z"/>
+                        </svg>
+                    </a>
+                </h4>
+                <a class="export__button">
+                    <svg class="export__button-icon" viewBox="0 0 23 17">
+                        <path d="M21 0H2C.9 0 0 .9 0 2v13c0 1.1.9 2 2 2h19c1.1 0 2-.9 2-2V2c0-1.1-.9-2-2-2zM7.732 6.95a.473.473 0 01-.072.256.582.582 0 01-.228.2l-1.704.919a2.047 2.047 0 01-.33.14 5.458 5.458 0 01-.366.106 9.7 9.7 0 01.366.099c.116.034.226.079.33.135l1.704.924c.104.055.18.122.228.198a.46.46 0 01.072.252v1.29L2.872 8.93v-.726l4.86-2.544v1.29zm2.94 5.593a1.078 1.078 0 01-.405.497 1.045 1.045 0 01-.567.169h-.792l3.408-8.946a.959.959 0 01.366-.468c.164-.108.355-.162.57-.162h.793l-3.374 8.91zm9.36-3.612l-4.86 2.538v-1.29c0-.092.023-.176.071-.252a.594.594 0 01.229-.198l1.704-.924c.1-.056.209-.101.327-.135.117-.034.24-.067.368-.1a5.692 5.692 0 01-.368-.104 1.772 1.772 0 01-.327-.141l-1.704-.918a.587.587 0 01-.229-.201.476.476 0 01-.071-.255V5.66l4.86 2.544v.726z"/>
+                    </svg>Embed Pen
+                </a>
+                <button class="export__button">
+                    <svg class="export__button-icon" viewBox="0 0 23 17"><path d="M18.18 5.76a1.221 1.221 0 00-.461-.273 2.044 2.044 0 00-.663-.096H16v2.772h1.056c.528 0 .908-.126 1.14-.378.232-.252.348-.604.348-1.056 0-.2-.03-.382-.09-.546a1.118 1.118 0 00-.273-.423zM21 0H2C.9 0 0 .9 0 2v13c0 1.1.9 2 2 2h19c1.1 0 2-.9 2-2V2c0-1.1-.9-2-2-2zM9.208 4.605a.936.936 0 01-.051.306c-.034.1-.081.194-.141.282l-4.104 5.862h4.164v1.56H2.332v-.78c0-.093.016-.184.048-.273a.951.951 0 01.132-.25l4.116-5.88h-3.96v-1.56h6.54v.733zm3.145 8.01h-2.041V3.872h2.04v8.741zm8.01-4.686c-.141.364-.355.676-.643.936-.288.26-.654.462-1.095.609-.442.145-.965.218-1.57.218H16v2.922h-2.028V3.873h3.084c.616 0 1.145.073 1.587.219.442.146.806.347 1.092.603.286.256.496.558.633.906.136.348.204.724.204 1.128 0 .436-.07.836-.21 1.2z"/>
+                    </svg>Export .zip
+                </button>
+            </section>
+            <a class="footer__link" href="https://github.com/">GitHub</a>
+        </div>
+    </footer>
+    <section class="key-commands">
+        <div class="key-commands__inner-container">
+            <section class="key-commands__editor-commands key-commands__editor-commands_first">
+                <h2 class="key-commands__title">Editor Commands</h2>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key">Ctrl</span>
+                        <span class="key-commands__key key-commands__key_mac">Ctrl</span>
+                        <span class="key-commands__key">Space</span>
+                    </kbd>
+                    Autocomplete
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">F</span>
+                    </kbd>
+                    Find
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">G</span>
+                    </kbd>
+                    Find Next
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">⇧</span>
+                        <span class="key-commands__key key-commands__key_mac">Opt</span>
+                        <span class="key-commands__key">G</span>
+                    </kbd>
+                    Find Previous
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">⇧</span>
+                        <span class="key-commands__key key-commands__key_mac">Opt</span>
+                        <span class="key-commands__key">F</span>
+                    </kbd>
+                    Find & Replace
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">⇧</span>
+                        <span class="key-commands__key">F</span>
+                    </kbd>
+                    Format Code
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">[</span>
+                    </kbd>
+                    Indent Code Right
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">]</span>
+                    </kbd>
+                    Indent Code Left
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key">⇧</span>
+                        <span class="key-commands__key">Tab</span>
+                    </kbd>
+                    Auto Indent Code
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">/</span>
+                    </kbd>
+                    Line Comment
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">⇧</span>
+                        <span class="key-commands__key key-commands__key_mac">Opt</span>
+                        <span class="key-commands__key">/</span>
+                    </kbd>
+                    Block Comment
+                </div>
+            </section>
+            <section class="key-commands__editor-commands key-commands__editor-commands_first">
+                <h2 class="key-commands__title">Editor Focus</h2>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">Alt</span>
+                        <span class="key-commands__key key-commands__key_mac">Opt</span>
+                        <span class="key-commands__key">1</span>
+                    </kbd>
+                    HTML Editor
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">Alt</span>
+                        <span class="key-commands__key key-commands__key_mac">Opt</span>
+                        <span class="key-commands__key">2</span>
+                    </kbd>
+                    CSS Editor
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">Alt</span>
+                        <span class="key-commands__key key-commands__key_mac">Opt</span>
+                        <span class="key-commands__key">3</span>
+                    </kbd>
+                    JS Editor
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">Alt</span>
+                        <span class="key-commands__key key-commands__key_mac">Opt</span>
+                        <span class="key-commands__key">4</span>
+                    </kbd>
+                    Toggle Console
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">Alt</span>
+                        <span class="key-commands__key key-commands__key_mac">Opt</span>
+                        <span class="key-commands__key">0</span>
+                    </kbd>
+                    Preview
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key">Esc</span>
+                    </kbd>
+                    Exit currently focused editor
+                </div>
+            </section>
+            <section class="key-commands__editor-commands key-commands__editor-commands_first">
+                <h2 class="key-commands__title">Misc</h2>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">⇧</span>
+                        <span class="key-commands__key">7</span>
+                    </kbd>
+                    Re-run Preview
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">⇧</span>
+                        <span class="key-commands__key">8</span>
+                    </kbd>
+                    Clear All Analyze Errors
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">⇧</span>
+                        <span class="key-commands__key">9</span>
+                    </kbd>
+                    Open This Dialog
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">⇧</span>
+                        <span class="key-commands__key">0</span>
+                    </kbd>
+                    Open Debug View
+                </div>
+                <h2 class="key-commands__title">HTML Specific</h2>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">⇧</span>
+                        <span class="key-commands__key">A</span>
+                    </kbd>
+                    Wrap With...
+                </div>
+                <h2 class="key-commands__title">Pen Actions</h2>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">P</span>
+                    </kbd>
+                    Create New Pen
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">S</span>
+                    </kbd>
+                    Save
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">⇧</span>
+                        <span class="key-commands__key">S</span>
+                    </kbd>
+                    Save As Private
+                </div>
+                <div class="key-commands__key-group">
+                    <kbd class="key-commands__key-command">
+                        <span class="key-commands__key command"></span>
+                        <span class="key-commands__key">I</span>
+                    </kbd>
+                    Info Panel (if owned)
+                </div>
+            </section>
+        </div>
+    </section>
+    <div class="overlay"></div>
+</body>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="js/codemirror/lib/codemirror.js"></script>
+<script src="js/codemirror/addon/scroll/simplescrollbars.js"></script>
+<script src="js/codemirror/addon/fold/foldgutter.js"></script>
+<script src="js/codemirror/addon/fold/foldcode.js"></script>
+
+<script src="js/codemirror/mode/python/python.js"></script>
+<script src="js/codemirror/mode/xml/xml.js"></script>
+
+<script src="js/code.js"></script>
+<script>
+    function editor(id) {
+        CodeMirror.fromTextArea(id, {
+            mode: "text/x-python",
+            lineNumbers: true,
+            lineWrapping: true,
+            scrollbarStyle: "simple",
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+        });
+    }
+    editor(document.getElementsByClassName("editor__textarea")[0]);
+    editor(document.getElementsByClassName("editor__textarea")[1]);
+    editor(document.getElementsByClassName("editor__textarea")[2]);
+</script>
+</html>
