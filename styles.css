@@ -94,7 +94,7 @@ body {
     margin: 0 8px;
     width: 30px;
 }
-.nav__icon {
+.nav__link-icon {
     display: block;
     height: 100%;
     width: 100% ;
@@ -212,7 +212,6 @@ body {
     line-height: 1.2;
     margin: 0 10px 0 0;
     padding: 10px 16px;
-    white-space: nowrap;
 }
 .nav__button:hover, .nav__button:focus {
     background: var(--button-hover-focus-background);
@@ -237,6 +236,7 @@ body {
     .header {
         height: 53px;
     }
+
     .nav__link-container {
         height: 53px;
     }
