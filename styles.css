@@ -732,20 +732,22 @@ body {
     display: inline-block;
     font-size: 1.3em;
     font-weight: bold;
-    left: 53px;
     line-height: 1.2;
     padding-left: 2px;
-    position: absolute;
-    top: 7px;
     transition: transform 0.2s;
     transform-origin: left center;
     vertical-align: middle;
+}
+.main__title_horizontal {
+    left: 53px;
+    position: absolute;
+    top: 7px;
     z-index: 0;
 }
 .main__title_vertical {
     transform: translate(-45px, -11px) rotate(90deg) scale(0.8);
 }
-.main__title-text {
+.main__title-text_hidden {
     visibility: hidden;
 }
 .main__editor-container {

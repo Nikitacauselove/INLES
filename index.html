@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="Description" content="Put your description here.">
+    <meta name="Description" content="Put your description here">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>INLES</title>
+    <title>Engineering equation solver</title>
     <link rel="stylesheet" href="js/codemirror-5.60.0/lib/codemirror.css">
+
     <link rel="stylesheet" href="js/codemirror-5.60.0/addon/scroll/simplescrollbars.css">
     <link rel="stylesheet" href="js/codemirror-5.60.0/addon/fold/foldgutter.css">
 
@@ -285,7 +286,7 @@
         </nav>
         <section class="main__inner-container">
             <div class="main__horizontal-resizer main__horizontal-resizer_editor">
-                <h2 class="main__title">
+                <h2 class="main__title main__title_horizontal">
                     <span>Editor</span>
                 </h2>
             </div>
@@ -298,7 +299,7 @@
                             </svg>
                         </button>
                         <h2 class="main__title">
-                            <span class="main__title-text">Editor</span>
+                            <span class="main__title-text_hidden">Editor</span>
                         </h2>
                     </div>
                     <div class="main__actions_right">
@@ -356,7 +357,7 @@
                 </article>
             </section>
             <div class="main__horizontal-resizer main__horizontal-resizer">
-                <h2 class="main__title">
+                <h2 class="main__title main__title_horizontal">
                     <span>Result</span>
                 </h2>
             </div>
@@ -369,7 +370,7 @@
                             </svg>
                         </button>
                         <h2 class="main__title">
-                            <span class="main__title-text">Result</span>
+                            <span class="main__title-text_hidden">Result</span>
                         </h2>
                     </div>
                     <div class="main__actions_right">
@@ -518,7 +519,7 @@ body
                 </article>
             </section>
             <div class="main__horizontal-resizer main__horizontal-resizer_graph">
-                <h2 class="main__title">
+                <h2 class="main__title main__title_horizontal">
                     <span>Graph</span>
                 </h2>
             </div>
@@ -531,7 +532,7 @@ body
                             </svg>
                         </button>
                         <h2 class="main__title">
-                            <span class="main__title-text">Graph</span>
+                            <span class="main__title-text_hidden">Graph</span>
                         </h2>
                     </div>
                     <div class="main__actions_right">
@@ -850,6 +851,7 @@ body
 
 
 <script src="js/codemirror-5.60.0/lib/codemirror.js"></script>
+
 <script src="js/codemirror-5.60.0/addon/scroll/simplescrollbars.js"></script>
 <script src="js/codemirror-5.60.0/addon/fold/foldgutter.js"></script>
 <script src="js/codemirror-5.60.0/addon/fold/foldcode.js"></script>
@@ -859,7 +861,7 @@ body
 
 <script src="js/code.js"></script>
 <script>
-    function editor(id) {
+    function editor (id) {
         CodeMirror.fromTextArea(id, {
             mode: "text/x-python",
             lineNumbers: true,
