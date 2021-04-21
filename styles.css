@@ -457,6 +457,9 @@ body {
 .modal__form {
     margin: 0 0 1rem 0;
 }
+.modal__form:last-of-type {
+    margin: 0;
+}
 
 .form {
     background: linear-gradient(to right, rgba(155, 157, 173,0.1), rgba(155 , 157, 173,0));
@@ -623,7 +626,7 @@ body {
     line-height: 1.4;
     margin-bottom: 0.75em;
 }
-.form-help__paragraph_last {
+.form-help__paragraph:last-of-type {
     margin-bottom: 0;
 }
 .form-help__link {
