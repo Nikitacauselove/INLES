@@ -84,17 +84,12 @@ body {
     height: 100%;
     position: relative;
 }
-.nav__link-container {
-    height: 65px;
-    margin: 0;
-}
-.nav__link {
-    display: block;
+.nav__icon-container {
     height: 100%;
     margin: 0 8px;
     width: 30px;
 }
-.nav__link-icon {
+.nav__icon {
     display: block;
     height: 100%;
     width: 100% ;
@@ -307,7 +302,7 @@ body {
     }
 }
 @media (max-width: 550px) {
-    .nav__link {
+    .nav__icon-container {
         width: 20px;
     }
 }
