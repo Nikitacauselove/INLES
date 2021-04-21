@@ -394,8 +394,6 @@ body {
 .modal__nav {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
     margin-bottom: 0;
     padding: 1rem 0;
 }
@@ -448,6 +446,13 @@ body {
 }
 .modal__tab_active {
     display: block;
+}
+.modal__tab::-webkit-scrollbar {
+    height: 0.5em;
+    width: 0.5em;
+}
+.modal__tab::-webkit-scrollbar-thumb {
+    background: #717790;
 }
 .modal__form {
     margin: 0 0 1rem 0;
@@ -625,7 +630,6 @@ body {
     border-bottom: 1px solid #56bcf9;
     color: #56bcf9;
     text-decoration: none;
-    white-space: nowrap;
 }
 .form-help__link:hover, .form-help__link:focus {
     color: #87d0fb;
@@ -672,13 +676,10 @@ body {
         border-bottom: 2px solid #2c303a;
         margin: 1rem 0.75rem 0;
         overflow-y: hidden;
-        overflow-x: auto;
-        padding: 0.2rem 0 1rem;
-        white-space: nowrap;
+        padding: 0.2rem 0 1.35rem;
     }
     .modal__nav-inner-container {
         display: inline-block;
-        line-height: 1.5;
     }
     .modal__button {
         display: inline-block;
