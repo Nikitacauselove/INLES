@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="twilight.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body> <!-- TODO: Заменить HTML на Editor. Дописать subtitle -->
     <header class="header">
         <nav class="nav">
             <object class="nav__icon-container">
@@ -283,9 +283,9 @@
             </button>
         </nav>
         <section class="main__inner-container">
-            <div class="main__horizontal-resizer">
+            <div class="main__horizontal">
                 <h2 class="main__title main__title_horizontal">
-                    <span>Editor</span>
+                    <span>HTML</span>
                 </h2>
             </div>
             <section class="main__editor-container main__editor-container_selected">
@@ -297,8 +297,20 @@
                             </svg>
                         </button>
                         <h2 class="main__title">
-                            <span class="main__title-text_hidden">Editor</span>
+                            <span class="main__title-text_hidden">
+                                HTML
+                            </span>
+                            <span class="main__subtitle"></span>
                         </h2>
+                        <div class="main__unsaved-message">
+                            <b>0</b>
+                            unsaved changes
+                            <span class="main__dismiss">
+                                <svg class="main__dismiss-icon" viewBox="0 0 100 100">
+                                    <path d="M96.8 83.7L63.1 50l33.7-33.7c3.6-3.6 3.6-9.4 0-13.1s-9.5-3.6-13.1 0L50 36.9 16.3 3.2C12.7-.4 6.9-.4 3.2 3.2s-3.6 9.5 0 13.1L36.9 50 3.2 83.7c-3.6 3.6-3.6 9.4 0 13.1s9.5 3.6 13.1 0L50 63.1l33.7 33.7c3.6 3.6 9.4 3.6 13.1 0s3.6-9.5 0-13.1z"/>
+                                </svg>
+                            </span>
+                        </div>
                     </div>
                     <div class="main__actions_right">
                         <button class="main__button button_dropdown" data-dropdown="editor">
@@ -350,7 +362,7 @@
                     </form>
                 </article>
             </section>
-            <div class="main__horizontal-resizer">
+            <div class="main__horizontal main__horizontal_resizer">
                 <h2 class="main__title main__title_horizontal">
                     <span>Result</span>
                 </h2>
@@ -512,7 +524,7 @@ body
                     </form>
                 </article>
             </section>
-            <div class="main__horizontal-resizer">
+            <div class="main__horizontal">
                 <h2 class="main__title main__title_horizontal">
                     <span>Graph</span>
                 </h2>

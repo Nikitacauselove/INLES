@@ -315,7 +315,7 @@ function changeSelected (button, editor) {
 /*                  Изменение размеров окна редактора                 */ /* TODO: Дописать */
 
 let previousElement, nextElement;
-const horizontalResizer = document.getElementsByClassName("main__horizontal-resizer")[1];
+const horizontalResizer = document.getElementsByClassName("main__horizontal_resizer")[0];
 let originalMousePositionX, previousElementWidth, nextElementWidth;
 
 horizontalResizer.addEventListener("mousedown", mouseStartX);
@@ -342,10 +342,12 @@ function mouseDragX (event) {
     previousElement.style.width = (previousElementWidth + dx) + "px";
     nextElement.style.width = (nextElementWidth - dx) + "px";
 
-    if (previousElementWidth + dx < 200) {
-        let test = document.getElementsByClassName("main__title")[0];
-        test.classList.add("main__title_vertical");
-    }
+    let mainTitle = document.getElementsByClassName("main__title")[0]
+    if (previousElementWidth + dx < 150)
+        mainTitle.classList.add("main__title_vertical");
+    else
+        mainTitle.classList.remove("main__title_vertical");
+
 }
 function mouseStopX () {
     document.removeEventListener("mousemove", mouseDragX);
