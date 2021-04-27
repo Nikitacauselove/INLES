@@ -1202,7 +1202,7 @@ body {
 }
 
 
-/*                  Footer                  */ /* TODO: Изменить Export */
+/*                  Footer                  */
 
 .footer {
     align-items: center;
@@ -1310,13 +1310,12 @@ body {
     text-overflow: ellipsis;
     text-shadow: none;
     transition: all ease 0.2s;
-    white-space: nowrap;
     width: 100%;
 }
 .export__button:hover, .export__button:focus {
-     background: #5a5f73;
-     border-color: #5a5f73;
-     color: white;
+     background: #c7c9d3;
+     border-color: #c7c9d3;
+     color: #131417;
  }
 .export__button-icon {
     display: inline-block;
@@ -1328,7 +1327,7 @@ body {
     width: 16px;
 }
 .export__button:hover .export__button-icon, .export__button:focus .export__button-icon {
-    fill: white;
+    fill: #131417;
 }
 
 .footer__link {
