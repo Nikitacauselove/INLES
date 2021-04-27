@@ -172,7 +172,7 @@ const modal = document.getElementsByClassName("modal")[0];
 
 function getActionButtons () {
     let navButtonAction = Array.from(document.getElementsByClassName("nav__button_settings"));
-    let mainButtonAction = Array.from(document.getElementsByClassName("main__button_action"));
+    let mainButtonAction = Array.from(document.getElementsByClassName("main__button_settings"));
     return navButtonAction.concat(mainButtonAction);
 }
 function getActionCloseButtons () {
@@ -312,10 +312,10 @@ function changeSelected (button, editor) {
 }
 
 
-/*                  Изменение размеров окна редактора                 */ /* TODO: Дописать */
+/*                  Изменение размеров окна редактора                 */ /* TODO: Дописать. Отключение кнопки */
 
 let previousElement, nextElement;
-const horizontalResizer = document.getElementsByClassName("main__horizontal_resizer")[0];
+const horizontalResizer = document.getElementsByClassName("separator_resizer")[0];
 let originalMousePositionX, previousElementWidth, nextElementWidth;
 
 horizontalResizer.addEventListener("mousedown", mouseStartX);
@@ -342,11 +342,11 @@ function mouseDragX (event) {
     previousElement.style.width = (previousElementWidth + dx) + "px";
     nextElement.style.width = (nextElementWidth - dx) + "px";
 
-    let mainTitle = document.getElementsByClassName("main__title")[0]
+    let separatorTitle = document.getElementsByClassName("separator__title")[0]
     if (previousElementWidth + dx < 150)
-        mainTitle.classList.add("main__title_vertical");
+        separatorTitle.classList.add("separator__title_vertical");
     else
-        mainTitle.classList.remove("main__title_vertical");
+        separatorTitle.classList.remove("separator__title_vertical");
 
 }
 function mouseStopX () {
@@ -399,18 +399,18 @@ function isDropdownButton (target) {
 const consoleButton = document.getElementsByClassName("footer__button_console")[0];
 const consoleCloseButton = document.getElementsByClassName("console__button_close")[0];
 const console = document.getElementsByClassName("console")[0];
-const verticalResizer = document.getElementsByClassName("main__vertical-resizer")[0];
+const verticalResizer = document.getElementsByClassName("separator_vertical")[0];
 
 consoleButton.addEventListener("click", consoleDisplay);
 consoleCloseButton.addEventListener("click", consoleHide);
 
 function consoleDisplay () {
     console.classList.toggle("console_display");
-    verticalResizer.classList.toggle("main__vertical-resizer_console-open");
+    verticalResizer.classList.toggle("separator_console-open");
 }
 function consoleHide () {
     console.classList.remove("console_display");
-    verticalResizer.classList.remove("main__vertical-resizer_console-open");
+    verticalResizer.classList.remove("separator_console-open");
 }
 
 
