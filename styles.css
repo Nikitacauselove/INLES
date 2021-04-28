@@ -957,6 +957,7 @@ body {
 .console_display {
     display: block;
 }
+
 .console__actions-container {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     background: rgba(0 ,0, 0, 0.1);
@@ -1003,6 +1004,7 @@ body {
     vertical-align: middle;
     width: 10px;
 }
+
 .console__inner-container {
     display: flex;
     flex-direction: column;
