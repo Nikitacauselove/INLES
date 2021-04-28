@@ -1012,6 +1012,13 @@ body {
     height: 100%;
     overflow-y: auto;
 }
+.console__entries::-webkit-scrollbar {
+    height: 0.5em;
+    width: 0.5em;
+}
+.console__entries::-webkit-scrollbar-thumb {
+    background: #717790;
+}
 .console__message {
     border-bottom: 1px solid #5a5f73;
     color: white;
@@ -1031,23 +1038,24 @@ body {
 }
 .console__message_log {
 }
-.console__command-line {
+
+.command-line {
     background: rgba(255, 255, 255, 0.1);
     display: flex;
     flex-shrink: 0;
     padding: 0 8px 0 0;
 }
-.console__command-line-arrow {
+.command-line__arrow {
     align-items: center;
     color: white;
     display: flex;
     font-weight: bold;
     padding-left: 10px;
 }
-.console__command-line-arrow:before {
+.command-line__arrow:before {
     content: '>';
 }
-.console__command-line-textarea {
+.command-line__textarea {
     background: none;
     border: 0;
     color: white;
@@ -1134,8 +1142,8 @@ body {
     }
 
     .main__editor-container {
-        height: 100% ;
         display: none;
+        height: 100%;
         width: 100% !important;
     }
     .main__editor-container_selected {
@@ -1196,8 +1204,8 @@ body {
 @media (min-height: 440px) and (min-width: 768px) {
     .console__resizer {
         background: var(--button-border-background);
-        height: 3px;
         cursor: auto;
+        height: 3px;
     }
 }
 

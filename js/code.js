@@ -312,7 +312,7 @@ function changeSelected (button, editor) {
 }
 
 
-/*                  Изменение размеров окна редактора                 */ /* TODO: Дописать. Отключение кнопки */
+/*                  Изменение размеров окна редактора                 */ /* TODO: Дописать. Отключение кнопки. Переписать для процентов */
 
 let previousElement, nextElement;
 const horizontalResizer = document.getElementsByClassName("separator_resizer")[0];
@@ -414,12 +414,12 @@ function consoleHide () {
 }
 
 
-/*                  Работа консоли                  */ /* TODO: Console parser */
+/*                  Работа консоли                  */ /* TODO: Console parser. Добавить прокрутку после ввода */
 
 const consoleCommands = [];
 const consoleClearButton = document.getElementsByClassName("console__button_clear")[0];
 const consoleEntries = document.getElementsByClassName("console__entries")[0];
-const consoleTextArea = document.getElementsByClassName("console__command-line-textarea")[0];
+const consoleTextArea = document.getElementsByClassName("command-line__textarea")[0];
 
 consoleClearButton.addEventListener("click", clearConsole);
 consoleTextArea.addEventListener("keypress", consoleInput);
@@ -464,7 +464,7 @@ function createMessage (type, value) {
 }
 
 
-/*                  Изменение размеров окна консоли                  */ /* TODO: Дописать. Только при console_open */
+/*                  Изменение размеров окна консоли                  */ /* TODO: Дописать. Только при console_open. Переписать для процентов */
 
 let originalMousePositionY, previousElementHeight, nextElementHeight;
 
