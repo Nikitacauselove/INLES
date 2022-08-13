@@ -400,6 +400,7 @@ const consoleButton = document.getElementsByClassName("footer__button_console")[
 const consoleCloseButton = document.getElementsByClassName("console__button_close")[0];
 const console = document.getElementsByClassName("console")[0];
 const verticalResizer = document.getElementsByClassName("separator_vertical")[0];
+let consoleSectionMinHeight;
 
 consoleButton.addEventListener("click", consoleDisplay);
 consoleCloseButton.addEventListener("click", consoleHide);
@@ -407,6 +408,7 @@ consoleCloseButton.addEventListener("click", consoleHide);
 function consoleDisplay () {
     console.classList.toggle("console_display");
     verticalResizer.classList.toggle("separator_console-open");
+    consoleSectionMinHeight = document.getElementsByClassName("console__actions-container")[0].offsetHeight;
 }
 function consoleHide () {
     console.classList.remove("console_display");
@@ -464,9 +466,11 @@ function createMessage (type, value) {
 }
 
 
-/*                  Изменение размеров окна консоли                  */ /* TODO: Дописать. Только при console_open. Переписать для процентов */
+/*                  Изменение размеров окна консоли                  */
 
-let originalMousePositionY, previousElementHeight, nextElementHeight;
+const mainSection = document.getElementsByClassName("main__inner-container")[0];
+const mainSectionMinHeight = parseFloat(window.getComputedStyle(mainSection).minHeight);
+let originalMousePositionY, mainSectionHeight, consoleSectionHeight;
 
 verticalResizer.addEventListener("mousedown", mouseStartY);
 
@@ -478,19 +482,21 @@ function mouseStartY (event) {
     nextElement = event.target.nextElementSibling;
 
     originalMousePositionY = event.pageY;
-    previousElementHeight = height(previousElement);
-    nextElementHeight = height(nextElement);
+    mainSectionHeight = getElementHeight(previousElement);
+    consoleSectionHeight = getElementHeight(nextElement);
 
     document.addEventListener("mousemove", mouseDragY);
     document.addEventListener("mouseup", mouseStopY)
 }
-function height (element) {
-    return parseFloat(document.defaultView.getComputedStyle(element).height);
+function getElementHeight (element) {
+    return parseFloat(window.getComputedStyle(element).height);
 }
 function mouseDragY (event) {
     let dy = (event.pageY - originalMousePositionY) || 0;
-    previousElement.style.height = (previousElementHeight + dy) + "px";
-    nextElement.style.height = (nextElementHeight - dy) + "px";
+    if (consoleSectionHeight - dy > consoleSectionMinHeight && mainSectionHeight + dy > mainSectionMinHeight) {
+        previousElement.style.height = (mainSectionHeight + dy) + "px";
+        nextElement.style.height = (consoleSectionHeight - dy) + "px";
+    }
 }
 function mouseStopY () {
     document.removeEventListener("mousemove", mouseDragY);
