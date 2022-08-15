@@ -226,6 +226,15 @@ body {
     vertical-align: bottom;
     width: 16px;
 }
+.nav__button-icon_rotate {
+    animation: rotate 1s linear;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 @media (max-width: 830px) {
     .header {
@@ -1581,4 +1590,3 @@ html:not(.mac) .footer__ctrl-keys {
         display: none;
     }
 }
-

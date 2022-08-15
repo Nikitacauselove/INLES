@@ -140,6 +140,24 @@ function disableSelection () {
 }
 
 
+/*                  Работа кнопки Run                  */
+
+const runButton = document.getElementsByClassName("nav__button_run")[0];
+const runButtonIcon = document.getElementsByClassName("nav__button-icon_run")[0]
+
+runButton.addEventListener("click", rotateButton);
+runButton.addEventListener("animationend", rotateButtonCallback);
+
+function rotateButton () {
+    runButton.disabled = true;
+    runButtonIcon.classList.add("nav__button-icon_rotate");
+}
+function rotateButtonCallback () {
+    runButtonIcon.classList.remove("nav__button-icon_rotate");
+    runButton.disabled = false;
+}
+
+
 /*                  Открытие/сокрытие навигации для мобильных устройств                  */
 
 const toggleButton = document.getElementsByClassName("toggle-button")[0];
@@ -394,7 +412,7 @@ function isDropdownButton (target) {
 }
 
 
-/*                  Открытие/сокрытие Console                  */
+/*                  Открытие/сокрытие консоли                  */
 
 const consoleButton = document.getElementsByClassName("footer__button_console")[0];
 const consoleCloseButton = document.getElementsByClassName("console__button_close")[0];
@@ -516,7 +534,7 @@ function exportVisualise () {
     footerExport.classList.toggle("export_visible");
 }
 function exportHide (event) {
-    if(!isExport(event.target.className)) {
+    if (!isExport(event.target.className)) {
         document.removeEventListener("click", exportHide);
         footerExport.classList.remove("export_visible");
     }
