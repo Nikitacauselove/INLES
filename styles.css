@@ -207,6 +207,7 @@ body {
     line-height: 1.2;
     margin: 0 10px 0 0;
     padding: 10px 16px;
+    position: relative;
 }
 .nav__button:hover, .nav__button:focus {
     background: var(--button-hover-focus-background);
@@ -218,6 +219,27 @@ body {
 .nav__button_run:hover, .nav__button_run:focus {
     border-color: var(--button-hover-focus-background);
 }
+.nav__button_run.nav__button_loading {
+    color: transparent;
+}
+.nav__button_loading::after {
+    animation: show-loading-spinner 2s ease, hide-loading-spinner 2s linear;
+    border: 4px solid transparent;
+    border-radius: 50%;
+    border-top-color: white;
+    bottom: 0;
+    content: "";
+    height: 16px;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 16px;
+}
+.nav__button_run:not(.nav__button_loading) {
+    animation: show-text 1s ease;
+}
 .nav__button-icon {
     display: inline-block;
     fill: currentColor;
@@ -226,13 +248,23 @@ body {
     vertical-align: bottom;
     width: 16px;
 }
-.nav__button-icon_rotate {
-    animation: rotate 1s linear;
-}
 
-@keyframes rotate {
-    100% {
-        transform: rotate(360deg);
+@keyframes show-loading-spinner {
+    to {
+        transform: rotate(2turn);
+    }
+}
+@keyframes hide-loading-spinner {
+    to {
+        border-top-color: transparent;
+    }
+}
+@keyframes show-text {
+    from {
+        color: transparent;
+    }
+    to {
+        color: white;
     }
 }
 

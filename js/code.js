@@ -143,17 +143,16 @@ function disableSelection () {
 /*                  Работа кнопки Run                  */
 
 const runButton = document.getElementsByClassName("nav__button_run")[0];
-const runButtonIcon = document.getElementsByClassName("nav__button-icon_run")[0]
 
 runButton.addEventListener("click", rotateButton);
 runButton.addEventListener("animationend", rotateButtonCallback);
 
 function rotateButton () {
     runButton.disabled = true;
-    runButtonIcon.classList.add("nav__button-icon_rotate");
+    runButton.classList.add("nav__button_loading");
 }
 function rotateButtonCallback () {
-    runButtonIcon.classList.remove("nav__button-icon_rotate");
+    runButton.classList.remove("nav__button_loading");
     runButton.disabled = false;
 }
 
