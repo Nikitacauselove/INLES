@@ -1,135 +1,3 @@
-// function solve(){
-//     var equations = editor.getValue();
-//     var json = JSON.stringify({"equations": equations, "guess_values": guess_values, "settings": settings});
-//     $.ajax({
-//         type: 'POST',
-//         url: "/cgi-bin/INLES/parseEq.cgi",
-//         datatype : "application/json",
-//         data: {"json": json},
-//         success: function(response){
-//
-//             if(response.success){
-//
-//                 var solution = "";
-//                 guess_values = response.solution;
-//                 for(var key in response.solution){
-//                     solution += key + ": " + response.solution[key] + "\n";
-//                 }
-//                 $('#solution_text').val(solution);
-//
-//             } else {
-//                 $('#solution_text').val(response.error);
-//                 guess_values = response.guess_values;
-//             }
-//             createGuessTable();
-//         }
-//     });
-//
-//     document.getElementById("defaultOpen").click();
-// }
-//
-// function updateGuess(key, value){
-//     guess_values[key] = parseFloat(value);
-// }
-//
-// function createGuessTable(){
-//     var guess = "<button onclick='resetGuess()'>Reset</button><br><table style='width:100%'>";
-//     for(var key in guess_values){
-//         guess += "<tr><td>"+ key + "</td><td><input type='number' step=any onchange=" + '"' + "updateGuess('"+key+"',this.value)" + '"' + " value='" + guess_values[key] + "'></td></tr>";
-//     }
-//     guess += "</table>";
-//     $('#Guess').html(guess);
-// }
-//
-// function resetGuess(){
-//     for(var key in guess_values){
-//         guess_values[key] = 1.0;
-//     }
-//
-//     createGuessTable();
-// }
-//
-// function setSetting(name, value){
-//     settings[name] = value;
-// }
-//
-// function saveFile() {
-//     var filename = "equations.txt";
-//     var type = ".txt";
-//     var equations = editor.getValue();
-//     var json = JSON.stringify({"equations": equations, "guess_values": guess_values, "settings": settings});
-//     var file = new Blob([json], {type: type});
-//     if (window.navigator.msSaveOrOpenBlob) // IE10+
-//         window.navigator.msSaveOrOpenBlob(file, filename);
-//     else { // Others
-//         var a = document.createElement("a"),
-//             url = URL.createObjectURL(file);
-//         a.href = url;
-//         a.download = filename;
-//         document.body.appendChild(a);
-//         a.click();
-//         setTimeout(function() {
-//             document.body.removeChild(a);
-//             window.URL.revokeObjectURL(url);
-//         }, 0);
-//     }
-// }
-//
-// function setSettings(){
-//     if(settings["rads"] == 1){
-//         $('#settings_trig_rad').prop('checked',true);
-//     } else {
-//         $('#settings_trig_deg').prop('checked',true);
-//     }
-//     $('#settings_xtol').val(settings["xtol"]);
-//     $('#settings_iter').val(settings["iter"]);
-//     $('#settings_fd_step').val(settings["fd_step"]);
-//     $('#settings_decimal').val(settings["decimal"]);
-// }
-//
-// function loadFile(evt){
-//     //Retrieve the first (and only!) File from the FileList object
-//     var f = evt.target.files[0];
-//
-//     if (f) {
-//         var r = new FileReader();
-//         r.onload = function(e) {
-//             var contents = e.target.result;
-//             var data = JSON.parse(contents);
-//             settings = data["settings"];
-//             guess_values = data["guess_values"];
-//             editor.setValue(data["equations"]);
-//             createGuessTable();
-//             setSettings();
-//         }
-//         r.readAsText(f);
-//     } else {
-//         alert("Failed to load file!");
-//     }
-// }
-//
-// function openTab(evt, tabName) {
-//     // Declare all variables
-//     var i, tabcontent, tablinks;
-//
-//     // Get all elements with class="tabcontent" and hide them
-//     tabcontent = document.getElementsByClassName("tabcontent");
-//     for (i = 0; i < tabcontent.length; i++) {
-//         tabcontent[i].style.display = "none";
-//     }
-//
-//     // Get all elements with class="tablinks" and remove the class "active"
-//     tablinks = document.getElementsByClassName("tablinks");
-//     for (i = 0; i < tablinks.length; i++) {
-//         tablinks[i].className = tablinks[i].className.replace(" active", "");
-//     }
-//
-//     // Show the current tab, and add an "active" class to the button that opened the tab
-//     document.getElementById(tabName).style.display = "block";
-//     evt.currentTarget.className += " active";
-// }
-
-
 /*                  Извлечение данных                  */
 
 function extractData (target, data) {
@@ -173,7 +41,7 @@ function navActionsOpen () {
     navActions.classList.toggle("nav__actions_open")
 }
 function navActionsClose (event) {
-    if(!isNavActions(event.target.className)) {
+    if (!isNavActions(event.target.className)) {
         document.removeEventListener("click", navActionsClose);
         toggleButton.classList.remove("toggle-button_expanded");
         navActions.classList.remove("nav__actions_open")
@@ -191,13 +59,15 @@ const actionCloseButtons = getActionCloseButtons();
 const modal = document.getElementsByClassName("modal")[0];
 
 function getActionButtons () {
-    let navButtonAction = Array.from(document.getElementsByClassName("nav__button_settings"));
-    let mainButtonAction = Array.from(document.getElementsByClassName("main__button_settings"));
+    const navButtonAction = Array.from(document.getElementsByClassName("nav__button_settings"));
+    const mainButtonAction = Array.from(document.getElementsByClassName("main__button_settings"));
+
     return navButtonAction.concat(mainButtonAction);
 }
 function getActionCloseButtons () {
-    let headerCloseButton = Array.from(document.getElementsByClassName("modal-header__close-button"));
-    let footerCloseButton = Array.from(document.getElementsByClassName("modal-footer__close-input"));
+    const headerCloseButton = Array.from(document.getElementsByClassName("modal-header__close-button"));
+    const footerCloseButton = Array.from(document.getElementsByClassName("modal-footer__close-input"));
+
     return headerCloseButton.concat(footerCloseButton);
 }
 
@@ -211,7 +81,8 @@ function modalOpen (event) {
 }
 function modalTabSelect (target) {
     if (target.hasAttribute("data-settings")) {
-        let data = extractData(target, "data-settings");
+        const data = extractData(target, "data-settings");
+
         switch (data) {
             case "editor":
                 changeActive(modalButtons[0], modalTabs[0]);
@@ -274,6 +145,7 @@ Array.from(formHelpCloseButtons).forEach((button) => button.addEventListener("cl
 
 function formHelpDisplay (event) {
     const data = extractData(event.target, "data-form-help");
+
     formHelp = formHelpMapping(data, formsHelp);
     if (previousFormHelp !== null && previousFormHelp !== formHelp) {
         previousFormHelpHide(previousFormHelp);
@@ -289,12 +161,18 @@ function formHelpHide () {
 }
 function formHelpMapping (data, formsHelp) {
     switch (data) {
-        case "trigonometry-mode"     : return formsHelp[0];
-        case "x-tolerance"           : return formsHelp[1];
-        case "max-iterations"        : return formsHelp[2]
-        case "finite-difference-step": return formsHelp[3];
-        case "decimal-places"        : return formsHelp[4];
-        case "input-a"               : return formsHelp[5];
+        case "trigonometry-mode":
+            return formsHelp[0];
+        case "x-tolerance":
+            return formsHelp[1];
+        case "max-iterations":
+            return formsHelp[2]
+        case "finite-difference-step":
+            return formsHelp[3];
+        case "decimal-places":
+            return formsHelp[4];
+        case "input-a":
+            return formsHelp[5];
     }
 }
 
@@ -358,16 +236,16 @@ function width (element) {
     return parseFloat(document.defaultView.getComputedStyle(element).width);
 }
 function mouseDragX (event) {
-    let dx = (event.pageX - originalMousePositionX) || 0;
+    const dx = (event.pageX - originalMousePositionX) || 0;
     previousElement.style.width = (previousElementWidth + dx) + "px";
     nextElement.style.width = (nextElementWidth - dx) + "px";
 
-    let separatorTitle = document.getElementsByClassName("separator__title")[0]
-    if (previousElementWidth + dx < 150)
+    const separatorTitle = document.getElementsByClassName("separator__title")[0]
+    if (previousElementWidth + dx < 150) {
         separatorTitle.classList.add("separator__title_vertical");
-    else
+    } else {
         separatorTitle.classList.remove("separator__title_vertical");
-
+    }
 }
 function mouseStopX () {
     document.removeEventListener("mousemove", mouseDragX);
@@ -385,9 +263,11 @@ Array.from(dropdownButtons).forEach((button) => button.addEventListener("click",
 
 function dropdownVisualise (event) {
     const data = extractData(event.target, "data-dropdown");
+
     dropdown = dropdownMapping(data, dropdowns);
-    if (previousDropdown !== null && previousDropdown !== dropdown)
+    if (previousDropdown !== null && previousDropdown !== dropdown) {
         previousDropdownHide();
+    }
     dropdown.classList.toggle("dropdown_dropped");
     document.addEventListener("click", dropdownHide);
     previousDropdown = dropdown;
@@ -397,16 +277,19 @@ function previousDropdownHide () {
     document.removeEventListener("click", dropdownHide);
 }
 function dropdownHide (event) {
-    if(!isDropdownButton(event.target)) {
+    if (!isDropdownButton(event.target)) {
         dropdown.classList.remove("dropdown_dropped");
         document.removeEventListener("click", dropdownHide);
     }
 }
 function dropdownMapping (data, dropdowns) {
     switch (data) {
-        case "editor": return dropdowns[0];
-        case "result": return dropdowns[1];
-        case "graph" : return dropdowns[2];
+        case "editor":
+            return dropdowns[0];
+        case "result":
+            return dropdowns[1];
+        case "graph":
+            return dropdowns[2];
     }
 }
 function isDropdownButton (target) {
@@ -448,6 +331,7 @@ consoleTextArea.addEventListener("keypress", consoleInput);
 
 function clearConsole () {
     const entries = document.getElementsByClassName("console__message");
+
     Array.from(entries).forEach((currentValue) => currentValue.parentNode.removeChild(currentValue));
 }
 function consoleInput (event) {
@@ -458,7 +342,7 @@ function consoleInput (event) {
     }
 }
 function addEntries (value) {
-    let message = createMessage("echo", value);
+    const message = createMessage("echo", value);
     consoleEntries.appendChild(message);
 
     if (true) {
@@ -467,9 +351,10 @@ function addEntries (value) {
     }
 }
 function createMessage (type, value) {
-    let message = document.createElement("pre");
+    const message = document.createElement("pre");
+
     switch (type) {
-        case "echo" :
+        case "echo":
             message.classList.add("console__message", "console__message_echo");
             message.textContent = value;
             break;
@@ -512,7 +397,8 @@ function getElementHeight (element) {
     return parseFloat(window.getComputedStyle(element).height);
 }
 function mouseDragY (event) {
-    let dy = (event.pageY - originalMousePositionY) || 0;
+    const dy = (event.pageY - originalMousePositionY) || 0;
+
     if (consoleSectionHeight - dy > consoleSectionMinHeight && mainSectionHeight + dy > mainSectionMinHeight) {
         previousElement.style.height = (mainSectionHeight + dy) + "px";
         nextElement.style.height = (consoleSectionHeight - dy) + "px";
