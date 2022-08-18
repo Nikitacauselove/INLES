@@ -248,6 +248,9 @@ body {
     vertical-align: bottom;
     width: 16px;
 }
+.nav__button-icon_run {
+    display: none;
+}
 
 @keyframes show-loading-spinner {
     to {
@@ -338,8 +341,8 @@ body {
         text-align: left;
         width: 100%;
     }
-    .nav__button-text_settings {
-        position: static;
+    .nav__button-icon_run {
+        display: inline-block;
     }
 }
 @media (max-width: 550px) {

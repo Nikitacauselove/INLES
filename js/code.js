@@ -145,14 +145,17 @@ function disableSelection () {
 const runButton = document.getElementsByClassName("nav__button_run")[0];
 
 runButton.addEventListener("click", rotateButton);
-runButton.addEventListener("animationend", rotateButtonCallback);
 
 function rotateButton () {
-    runButton.disabled = true;
-    runButton.classList.add("nav__button_loading");
+    if (window.matchMedia("(min-width: 767px) and (min-height: 440px)").matches) {
+        runButton.disabled = true;
+        runButton.addEventListener("animationend", rotateButtonCallback);
+        runButton.classList.add("nav__button_loading");
+    }
 }
 function rotateButtonCallback () {
     runButton.classList.remove("nav__button_loading");
+    runButton.removeEventListener("animationend", rotateButtonCallback);
     runButton.disabled = false;
 }
 
