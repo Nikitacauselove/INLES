@@ -90,9 +90,6 @@ function modalTabSelect (target) {
             case "result":
                 changeActive(modalButtons[1], modalTabs[1]);
                 break;
-            case "graph" :
-                changeActive(modalButtons[0], modalTabs[0]);
-                break;
         }
     }
 }
@@ -288,8 +285,6 @@ function dropdownMapping (data, dropdowns) {
             return dropdowns[0];
         case "result":
             return dropdowns[1];
-        case "graph":
-            return dropdowns[2];
     }
 }
 function isDropdownButton (target) {

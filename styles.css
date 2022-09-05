@@ -845,6 +845,7 @@ body {
 .main__editor-container {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     overflow: hidden;
 }
 .main__actions {
@@ -1115,26 +1116,6 @@ body {
     resize: none;
 }
 
-@media (max-width: 2560px) {
-    .main__editor-container {
-        width: 32.7083%;
-    }
-}
-@media (max-width: 1440px) {
-    .main__editor-container {
-        width: 32.2222%;
-    }
-}
-@media (max-width: 1024px) {
-    .main__editor-container {
-        width: 31.7708%;;
-    }
-}
-@media (max-width: 768px) {
-    .main__editor-container {
-        width: 31.25%;
-    }
-}
 @media (max-width: 767px), (max-height: 440px) {
     .main-nav {
         align-items: end;
