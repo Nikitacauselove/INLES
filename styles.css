@@ -764,6 +764,7 @@ body {
     display: flex;
     flex-grow: 1;
     min-height: 125px;
+    overflow: hidden;
     width: 100%;
 }
 .main__separator {

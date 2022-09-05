@@ -209,8 +209,8 @@ function changeSelected (button, editor) {
 
 /*                  Изменение размеров окна редактора                 */ /* TODO: Дописать. Отключение кнопки. Переписать для процентов */
 
-let previousElement, nextElement;
 const horizontalResizer = document.getElementsByClassName("separator_resizer")[0];
+let previousElement, nextElement;
 let originalMousePositionX, previousElementWidth, nextElementWidth;
 
 horizontalResizer.addEventListener("mousedown", mouseStartX);
@@ -233,15 +233,22 @@ function width (element) {
     return parseFloat(document.defaultView.getComputedStyle(element).width);
 }
 function mouseDragX (event) {
+    const pageWidth = document.documentElement.scrollWidth;
     const dx = (event.pageX - originalMousePositionX) || 0;
     previousElement.style.width = (previousElementWidth + dx) + "px";
     nextElement.style.width = (nextElementWidth - dx) + "px";
 
-    const separatorTitle = document.getElementsByClassName("separator__title")[0]
+    const editorSeparatorTitle = document.getElementsByClassName("separator__title")[0];
+    const resultSeparatorTitle = document.getElementsByClassName("separator__title")[1];
     if (previousElementWidth + dx < 150) {
-        separatorTitle.classList.add("separator__title_vertical");
+        editorSeparatorTitle.classList.add("separator__title_vertical");
     } else {
-        separatorTitle.classList.remove("separator__title_vertical");
+        editorSeparatorTitle.classList.remove("separator__title_vertical");
+    }
+    if (pageWidth - (previousElementWidth + dx) < 150) {
+        resultSeparatorTitle.classList.add("separator__title_vertical");
+    } else {
+        resultSeparatorTitle.classList.remove("separator__title_vertical");
     }
 }
 function mouseStopX () {
