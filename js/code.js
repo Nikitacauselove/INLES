@@ -234,7 +234,13 @@ function width (element) {
 }
 function mouseDragX (event) {
     const pageWidth = document.documentElement.scrollWidth;
-    const dx = (event.pageX - originalMousePositionX) || 0;
+    let dx = event.pageX - originalMousePositionX;
+    if (event.pageX - 16 < 0) {
+        dx = -previousElementWidth;
+    }
+    if (event.pageX + 16 > pageWidth) {
+        dx = nextElementWidth;
+    }
     previousElement.style.width = (previousElementWidth + dx) + "px";
     nextElement.style.width = (nextElementWidth - dx) + "px";
 
