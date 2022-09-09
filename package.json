@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "codemirror": "^5.65.8",
     "normalize.css": "^8.0.1"
   }
 }
