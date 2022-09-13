@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../node_modules/codemirror/addon/scroll/simplescrollbars.css">
     <link rel="stylesheet" href="../node_modules/codemirror/addon/fold/foldgutter.css">
     <link rel="stylesheet" href="../node_modules/normalize.css/normalize.css">
-    <link rel="stylesheet" href="twilight.css">
+    <link rel="stylesheet" href="../node_modules/codemirror/theme/twilight.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -832,7 +832,8 @@ body
             lineWrapping: true,
             scrollbarStyle: "simple",
             foldGutter: true,
-            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+            theme: "twilight"
         });
     }
     editor(document.getElementsByClassName("editor__textarea")[0]);

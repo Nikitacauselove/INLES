@@ -1537,6 +1537,11 @@ html:not(.mac) .footer__ctrl-keys {
     font-family: Monaco, monospace;
 }
 
+.cm-keyword { color:#ddca7e !important; }
+.cm-variable { color: #ddca7e; }
+.cm-property { color: #9a8297; }
+.cm-string { color:#96b38a !important; }
+
 .CodeMirror {
     color: white;
     background: transparent;
@@ -1608,3 +1613,18 @@ html:not(.mac) .footer__ctrl-keys {
         display: none;
     }
 }
+
+
+/*                  CodeMirror переопределение стилей для theme                 */
+
+.cm-s-twilight div.CodeMirror-selected { background: rgba(255,255,255,0.05); }
+.cm-s-twilight.CodeMirror { background: #1d1e22; }
+
+.cm-s-twilight .CodeMirror-gutters { background: none; border-right: none; }
+.cm-s-twilight .CodeMirror-linenumber { color: #34363e; }
+
+.cm-s-twilight .cm-operator { color: #ccc; }
+.cm-s-twilight .cm-comment { color: #717790; font-style: normal; }
+.cm-s-twilight .cm-string { font-style: normal; }
+.cm-s-twilight .cm-builtin { color: #ddca7e; }
+.cm-s-twilight .cm-error { border-bottom: none; }
