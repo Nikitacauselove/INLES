@@ -37,7 +37,7 @@ function disableSelection () {
 }
 
 
-/** Работа и анимация кнопки Run. */
+/** Анимация кнопки Run. */
 
 buttons.runButton.addEventListener("click", startRunButtonAnimation);
 
@@ -59,9 +59,6 @@ function endRunButtonAnimation() {
 
 buttons.toggleButton.addEventListener("click", openMobileNavigation);
 
-function isNavActions(className) {
-    return className.includes("toggle-button") || className.includes("nav__actions");
-}
 function openMobileNavigation() {
     document.addEventListener("click", closeMobileNavigation);
     buttons.toggleButton.classList.toggle("toggle-button_expanded");
@@ -74,21 +71,24 @@ function closeMobileNavigation(event) {
         buttons.navActions.classList.remove("nav__actions_open")
     }
 }
+function isNavActions(className) {
+    return className.includes("toggle-button") || className.includes("nav__actions");
+}
 
 
 /** Открытие/сокрытие модального окна. */
 
 function getActionButtons() {
-    const navButtonAction = Array.from(document.getElementsByClassName("nav__button_settings"));
-    const mainButtonAction = Array.from(document.getElementsByClassName("main__button_settings"));
+    const mainActionButtons = Array.from(document.getElementsByClassName("main__button_settings"));
+    const navActionButtons = Array.from(document.getElementsByClassName("nav__button_settings"));
 
-    return navButtonAction.concat(mainButtonAction);
+    return [...mainActionButtons, ...navActionButtons];
 }
 function getActionCloseButtons() {
-    const headerCloseButton = Array.from(document.getElementsByClassName("modal-header__close-button"));
-    const footerCloseButton = Array.from(document.getElementsByClassName("modal-footer__close-input"));
+    const headerCloseButtons = Array.from(document.getElementsByClassName("modal-header__close-button"));
+    const footerCloseButtons = Array.from(document.getElementsByClassName("modal-footer__close-input"));
 
-    return headerCloseButton.concat(footerCloseButton);
+    return [...headerCloseButtons, ...footerCloseButtons];
 }
 
 buttons.actionButtons.forEach((button) => button.addEventListener("click", openModal));
@@ -99,31 +99,30 @@ function openModal(event) {
     selectModalTab(event.target);
     pageElements.modal.classList.add("modal_open");
 }
-function selectModalTab(target) {
-    if (target.hasAttribute("data-settings")) {
-        const attribute = target.getAttribute("data-settings");
-
-        switch (attribute) {
-            case "editor":
-                changeActiveTab(buttons.modalButtons[0], pageElements.modalTabs[0]);
-                break;
-            case "result":
-                changeActiveTab(buttons.modalButtons[1], pageElements.modalTabs[1]);
-                break;
-        }
-    }
-}
 function closeModal() {
     hideOverlay(closeModal);
     buttons.actionCloseButtons.forEach((button) => button.removeEventListener("click", closeModal));
     pageElements.modal.classList.remove("modal_open");
 }
+function selectModalTab(target) {
+        if (target.hasAttribute("data-settings")) {
+            const attribute = target.getAttribute("data-settings");
+
+            switch (attribute) {
+                case "editor":
+                    changeActiveTab(buttons.modalButtons[0], pageElements.modalTabs[0]);
+                    break;
+                case "result":
+                    changeActiveTab(buttons.modalButtons[1], pageElements.modalTabs[1]);
+                    break;
+            }
+        }
+    }
 
 
 /** Переключение между вкладками модального окна. */
 
-let activeButton = buttons.modalButtons[0];
-let activeTab = pageElements.modalTabs[0];
+const changeActiveTab = changeActiveTabClosure();
 
 Array.from(buttons.modalButtons).forEach((link) => link.addEventListener("click", modalButtonMapping));
 
@@ -137,14 +136,19 @@ function modalButtonMapping(event) {
             break;
     }
 }
-function changeActiveTab(button, tab) {
-    activeButton.classList.remove("modal__button_active");
-    activeButton = button;
-    activeButton.classList.add("modal__button_active");
+function changeActiveTabClosure() {
+    let activeButton = buttons.modalButtons[0];
+    let activeTab = pageElements.modalTabs[0];
 
-    activeTab.classList.remove("modal__tab_active");
-    activeTab = tab;
-    activeTab.classList.add("modal__tab_active");
+    return function(button, tab) {
+        activeButton.classList.remove("modal__button_active");
+        activeButton = button;
+        activeButton.classList.add("modal__button_active");
+
+        activeTab.classList.remove("modal__tab_active");
+        activeTab = tab;
+        activeTab.classList.add("modal__tab_active");
+    }
 }
 
 
@@ -160,16 +164,16 @@ function showFormHelp(event) {
 
     formHelp = formHelpMapping(attribute, pageElements.formsHelp);
     if (previousFormHelp !== null && previousFormHelp !== formHelp) {
-        hidePreviousFormHelp(previousFormHelp);
+        hidePreviousFormHelp();
     }
     formHelp.classList.toggle("form-help_display");
     previousFormHelp = formHelp;
 }
-function hidePreviousFormHelp() {
-    previousFormHelp.classList.remove("form-help_display");
-}
 function hideFormHelp() {
     formHelp.classList.remove("form-help_display");
+}
+function hidePreviousFormHelp() {
+    previousFormHelp.classList.remove("form-help_display");
 }
 function formHelpMapping(attribute, formsHelp) {
     switch (attribute) {
@@ -191,8 +195,7 @@ function formHelpMapping(attribute, formsHelp) {
 
 /** Переключение между вкладками для мобильных устройств. */
 
-let selectedButton = buttons.mainNavButtons[0];
-let selectedEditor = pageElements.editors[0];
+const changeSelectedEditor = changeSelectedEditorClosure();
 
 Array.from(buttons.mainNavButtons).forEach((button) => button.addEventListener("click", buttonMapping));
 
@@ -206,14 +209,19 @@ function buttonMapping(event) {
             break;
     }
 }
-function changeSelectedEditor(button, editor) {
-    selectedButton.classList.remove("main-nav__button_selected");
-    selectedButton = button;
-    selectedButton.classList.add("main-nav__button_selected");
+function changeSelectedEditorClosure() {
+    let selectedButton = buttons.mainNavButtons[0];
+    let selectedEditor = pageElements.editors[0];
 
-    selectedEditor.classList.remove("main__editor-container_selected");
-    selectedEditor = editor;
-    selectedEditor.classList.add("main__editor-container_selected");
+    return function(button, editor) {
+        selectedButton.classList.remove("main-nav__button_selected");
+        selectedButton = button;
+        selectedButton.classList.add("main-nav__button_selected");
+
+        selectedEditor.classList.remove("main__editor-container_selected");
+        selectedEditor = editor;
+        selectedEditor.classList.add("main__editor-container_selected");
+    }
 }
 
 
@@ -420,6 +428,9 @@ function mouseStopY() {
 
 buttons.exportButton.addEventListener("click", showExport);
 
+function isExport(className) {
+    return className.includes("export");
+}
 function showExport() {
     document.addEventListener("click", hideExport);
     pageElements.footerExport.classList.toggle("export_visible");
@@ -429,9 +440,6 @@ function hideExport(event) {
         document.removeEventListener("click", hideExport);
         pageElements.footerExport.classList.remove("export_visible");
     }
-}
-function isExport(className) {
-    return className.includes("export");
 }
 
 
