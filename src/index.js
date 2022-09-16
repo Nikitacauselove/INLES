@@ -32,7 +32,7 @@ const pageElements = {
     verticalResizer: document.getElementsByClassName("separator_vertical")[0]
 };
 
-function disableSelection () {
+function disableSelection() {
     return false;
 }
 
@@ -44,14 +44,14 @@ buttons.runButton.addEventListener("click", startRunButtonAnimation);
 function startRunButtonAnimation() {
     if (window.matchMedia("(min-width: 767px) and (min-height: 440px)").matches) {
         buttons.runButton.disabled = true;
-        buttons.runButton.addEventListener("animationend", endRunButtonAnimation);
         buttons.runButton.classList.add("nav__button_loading");
+        buttons.runButton.addEventListener("animationend", endRunButtonAnimation);
     }
 }
 function endRunButtonAnimation() {
     buttons.runButton.disabled = false;
-    buttons.runButton.removeEventListener("animationend", endRunButtonAnimation);
     buttons.runButton.classList.remove("nav__button_loading");
+    buttons.runButton.removeEventListener("animationend", endRunButtonAnimation);
 }
 
 
@@ -60,15 +60,15 @@ function endRunButtonAnimation() {
 buttons.toggleButton.addEventListener("click", openMobileNavigation);
 
 function openMobileNavigation() {
-    document.addEventListener("click", closeMobileNavigation);
-    buttons.toggleButton.classList.toggle("toggle-button_expanded");
     buttons.navActions.classList.toggle("nav__actions_open");
+    buttons.toggleButton.classList.toggle("toggle-button_expanded");
+    document.addEventListener("click", closeMobileNavigation);
 }
 function closeMobileNavigation(event) {
     if (!isNavActions(event.target.className)) {
-        document.removeEventListener("click", closeMobileNavigation);
+        buttons.navActions.classList.remove("nav__actions_open");
         buttons.toggleButton.classList.remove("toggle-button_expanded");
-        buttons.navActions.classList.remove("nav__actions_open")
+        document.removeEventListener("click", closeMobileNavigation);
     }
 }
 function isNavActions(className) {
@@ -95,14 +95,14 @@ buttons.actionButtons.forEach((button) => button.addEventListener("click", openM
 
 function openModal(event) {
     showOverlay(closeModal);
-    buttons.actionCloseButtons.forEach((button) => button.addEventListener("click", closeModal));
     selectModalTab(event.target);
     pageElements.modal.classList.add("modal_open");
+    buttons.actionCloseButtons.forEach((button) => button.addEventListener("click", closeModal));
 }
 function closeModal() {
     hideOverlay(closeModal);
-    buttons.actionCloseButtons.forEach((button) => button.removeEventListener("click", closeModal));
     pageElements.modal.classList.remove("modal_open");
+    buttons.actionCloseButtons.forEach((button) => button.removeEventListener("click", closeModal));
 }
 function selectModalTab(target) {
         if (target.hasAttribute("data-settings")) {
@@ -154,23 +154,24 @@ function changeActiveTabClosure() {
 
 /** Открытие/сокрытие подсказок. */
 
-let previousFormHelp = null, formHelp = null;
+let formHelp, previousFormHelp;
 
 Array.from(buttons.formHelpButtons).forEach((button) => button.addEventListener("click", showFormHelp));
-Array.from(buttons.formHelpCloseButtons).forEach((button) => button.addEventListener("click", hideFormHelp));
 
 function showFormHelp(event) {
     const attribute = event.target.getAttribute("data-form-help");
 
     formHelp = formHelpMapping(attribute, pageElements.formsHelp);
-    if (previousFormHelp !== null && previousFormHelp !== formHelp) {
+    if (previousFormHelp !== undefined && previousFormHelp !== formHelp) {
         hidePreviousFormHelp();
     }
     formHelp.classList.toggle("form-help_display");
     previousFormHelp = formHelp;
+    Array.from(buttons.formHelpCloseButtons).forEach((button) => button.addEventListener("click", hideFormHelp));
 }
 function hideFormHelp() {
     formHelp.classList.remove("form-help_display");
+    Array.from(buttons.formHelpCloseButtons).forEach((button) => button.removeEventListener("click", hideFormHelp));
 }
 function hidePreviousFormHelp() {
     previousFormHelp.classList.remove("form-help_display");
@@ -282,7 +283,7 @@ function mouseStopX() {
 
 /** Открытие/сокрытие выпадающего меню. */
 
-let previousDropdown = null, dropdown = null;
+let dropdown, previousDropdown;
 
 Array.from(buttons.dropdownButtons).forEach((button) => button.addEventListener("click", showDropdown));
 
@@ -290,22 +291,22 @@ function showDropdown(event) {
     const attribute = event.target.getAttribute("data-dropdown");
 
     dropdown = dropdownMapping(attribute, pageElements.dropdowns);
-    if (previousDropdown !== null && previousDropdown !== dropdown) {
+    if (previousDropdown !== undefined && previousDropdown !== dropdown) {
         hidePreviousDropdown();
     }
     dropdown.classList.toggle("dropdown_dropped");
-    document.addEventListener("click", hideDropdown);
     previousDropdown = dropdown;
-}
-function hidePreviousDropdown() {
-    previousDropdown.classList.remove("dropdown_dropped");
-    document.removeEventListener("click", hideDropdown);
+    document.addEventListener("click", hideDropdown);
 }
 function hideDropdown(event) {
     if (!isDropdownButton(event.target)) {
         dropdown.classList.remove("dropdown_dropped");
         document.removeEventListener("click", hideDropdown);
     }
+}
+function hidePreviousDropdown() {
+    previousDropdown.classList.remove("dropdown_dropped");
+    document.removeEventListener("click", hideDropdown);
 }
 function dropdownMapping(attribute, dropdowns) {
     switch (attribute) {
@@ -325,16 +326,17 @@ function isDropdownButton(target) {
 let consoleSectionMinHeight;
 
 buttons.consoleButton.addEventListener("click", openConsole);
-buttons.consoleCloseButton.addEventListener("click", closeConsole);
 
 function openConsole() {
+    consoleSectionMinHeight = document.getElementsByClassName("console__actions-container")[0].offsetHeight;
     pageElements.console.classList.toggle("console_display");
     pageElements.verticalResizer.classList.toggle("separator_console-open");
-    consoleSectionMinHeight = document.getElementsByClassName("console__actions-container")[0].offsetHeight;
+    buttons.consoleCloseButton.addEventListener("click", closeConsole);
 }
 function closeConsole() {
     pageElements.console.classList.remove("console_display");
     pageElements.verticalResizer.classList.remove("separator_console-open");
+    buttons.consoleCloseButton.removeEventListener("click", closeConsole);
 }
 
 
@@ -428,18 +430,18 @@ function mouseStopY() {
 
 buttons.exportButton.addEventListener("click", showExport);
 
-function isExport(className) {
-    return className.includes("export");
-}
 function showExport() {
-    document.addEventListener("click", hideExport);
     pageElements.footerExport.classList.toggle("export_visible");
+    document.addEventListener("click", hideExport);
 }
 function hideExport(event) {
     if (!isExport(event.target.className)) {
-        document.removeEventListener("click", hideExport);
         pageElements.footerExport.classList.remove("export_visible");
+        document.removeEventListener("click", hideExport);
     }
+}
+function isExport(className) {
+    return className.includes("export");
 }
 
 
@@ -460,12 +462,12 @@ function hideShortcuts() {
 /** Открытие/сокрытие overlay. */
 
 function showOverlay(callback) {
-    pageElements.overlay.addEventListener("click", callback);
     pageElements.overlay.classList.add("overlay_display");
+    pageElements.overlay.addEventListener("click", callback);
 }
 function hideOverlay(callback) {
-    pageElements.overlay.removeEventListener("click", callback);
     pageElements.overlay.classList.remove("overlay_display");
+    pageElements.overlay.removeEventListener("click", callback);
 }
 
 
