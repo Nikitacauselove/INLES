@@ -21,6 +21,7 @@ const pageElements = {
     consoleTextArea: document.getElementsByClassName("command-line__textarea")[0],
     dropdowns: document.getElementsByClassName("dropdown"),
     editors: document.getElementsByClassName("main__editor-container"),
+    footer: document.getElementsByClassName("footer")[0],
     footerExport: document.getElementsByClassName("footer__export")[0],
     formsHelp: document.getElementsByClassName("form-help"),
     horizontalResizer: document.getElementsByClassName("separator_resizer")[0],
@@ -323,12 +324,9 @@ function isDropdownButton(target) {
 
 /** Открытие/сокрытие консоли. */
 
-let consoleSectionMinHeight;
-
 buttons.consoleButton.addEventListener("click", openConsole);
 
 function openConsole() {
-    consoleSectionMinHeight = document.getElementsByClassName("console__actions-container")[0].offsetHeight;
     pageElements.console.classList.toggle("console_display");
     pageElements.verticalResizer.classList.toggle("separator_console-open");
     buttons.consoleCloseButton.addEventListener("click", closeConsole);
@@ -390,8 +388,9 @@ function createMessage(type, value) {
 
 /** Изменение размеров окна консоли. */
 
-const mainSectionMinHeight = parseFloat(window.getComputedStyle(pageElements.mainSection).minHeight);
-let originalMousePositionY, mainSectionHeight, consoleSectionHeight;
+const mainMinHeight = parseFloat(window.getComputedStyle(pageElements.mainSection).minHeight);
+const verticalResizerHeight = getElementHeight(pageElements.verticalResizer);
+let consoleHeight, footerHeight, mainHeight, originalMousePositionY, pageHeight;
 
 pageElements.verticalResizer.addEventListener("mousedown", mouseStartY);
 
@@ -399,30 +398,36 @@ function mouseStartY(event) {
     document.body.focus();
     document.body.onselectstart = disableSelection;
 
-    previousElement = event.target.previousElementSibling;
-    nextElement = event.target.nextElementSibling;
-
     originalMousePositionY = event.pageY;
-    mainSectionHeight = getElementHeight(previousElement);
-    consoleSectionHeight = getElementHeight(nextElement);
+
+    nextElement = event.target.nextElementSibling;
+    previousElement = event.target.previousElementSibling;
+
+    consoleHeight = getElementHeight(nextElement);
+    footerHeight = getElementHeight(pageElements.footer);
+    mainHeight = getElementHeight(previousElement);
+    pageHeight = document.documentElement.scrollHeight;
 
     document.addEventListener("mousemove", mouseDragY);
     document.addEventListener("mouseup", mouseStopY)
 }
-function getElementHeight(element) {
-    return parseFloat(window.getComputedStyle(element).height);
-}
 function mouseDragY(event) {
-    const dy = (event.pageY - originalMousePositionY) || 0;
+    let dy = event.pageY - originalMousePositionY;
 
-    if (consoleSectionHeight - dy > consoleSectionMinHeight && mainSectionHeight + dy > mainSectionMinHeight) {
-        previousElement.style.height = (mainSectionHeight + dy) + "px";
-        nextElement.style.height = (consoleSectionHeight - dy) + "px";
+    if (event.pageY + verticalResizerHeight + footerHeight > pageHeight) {
+        dy = consoleHeight;
+    }
+    if (mainHeight + dy > mainMinHeight) {
+        previousElement.style.height = `${mainHeight + dy}px`;
+        nextElement.style.height = `${consoleHeight - dy}px`;
     }
 }
 function mouseStopY() {
     document.removeEventListener("mousemove", mouseDragY);
     document.removeEventListener("mouseup", mouseStopY);
+}
+function getElementHeight(element) {
+    return parseFloat(window.getComputedStyle(element).height);
 }
 
 
