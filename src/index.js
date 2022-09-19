@@ -430,6 +430,10 @@ function getElementHeight(element) {
     return parseFloat(window.getComputedStyle(element).height);
 }
 
+/** Изменение размеров окна консоли при изменении размеров окна страницы. */
+
+window.matchMedia("(max-width: 767px) or (max-height: 440px)").addEventListener("change", () => pageElements.console.style.height = `195px`);
+
 
 /** Открытие/сокрытие окна Export. */
 
