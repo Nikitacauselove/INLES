@@ -210,6 +210,9 @@ body {
     padding: 10px 16px;
     position: relative;
 }
+.nav__button:active {
+    transform: translateY(1px);
+}
 .nav__button:hover, .nav__button:focus {
     background: var(--button-hover-focus-background);
 }
@@ -415,6 +418,9 @@ body {
     margin: 0 1px 0 0;
     padding: 2px 7px;
 }
+.modal-header__close-button:active {
+    transform: translateY(1px);
+}
 .modal-header__close-button:hover, .modal-header__close-button:focus {
     background: var(--button-hover-focus-background);
 }
@@ -539,6 +545,9 @@ body {
     background-color: transparent;
     border: none;
     cursor: pointer;
+}
+.form__help-button:active {
+    transform: translateY(1px);
 }
 .form__help-icon {
     display: block;
@@ -708,6 +717,9 @@ body {
     line-height: 1.2;
     margin-left: auto;
     padding: 6px 11px;
+}
+.modal-footer__close-input:active {
+    transform: translateY(1px);
 }
 .modal-footer__close-input:hover, .modal-footer__close-input:focus {
     background: #2fb45a;
@@ -925,6 +937,9 @@ body {
     margin: 0 1px 0 0;
     padding: 2px 7px;
 }
+.main__button:active {
+    transform: translateY(1px);
+}
 .main__button:hover, .main__button:focus {
     background: var(--button-hover-focus-background);
 }
@@ -1000,6 +1015,7 @@ body {
     display: none;
     height: 195px;
     overflow: hidden;
+    z-index: 0;
 }
 .console_display {
     display: block;
@@ -1039,6 +1055,9 @@ body {
     line-height: 1.2;
     margin: 0 1px 0 0;
     padding: 2px 7px;
+}
+.console__button:active {
+    transform: translateY(1px);
 }
 .console__button:hover, .console__button:focus {
     background: var(--button-hover-focus-background);
