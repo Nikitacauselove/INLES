@@ -363,6 +363,7 @@ function addNewEntry(value) {
         const errorMessage = createMessage("error", value);
 
         pageElements.consoleEntries.appendChild(errorMessage);
+        pageElements.consoleEntries.lastElementChild.scrollIntoView(false);
     }
 }
 function createMessage(type, value) {
