@@ -1301,6 +1301,12 @@ body {
     display: none;
     text-indent: 1px;
 }
+.footer__button_zoom:hover, .footer__button_zoom:focus {
+    outline: none;
+}
+.footer__button_zoom-outline {
+    outline: revert !important;
+}
 .footer__button:hover, .footer__button:focus {
     background: var(--header-button-background);
     color: white;

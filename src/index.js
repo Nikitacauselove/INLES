@@ -30,7 +30,8 @@ const pageElements = {
     modalTabs: document.getElementsByClassName("modal__tab"),
     overlay: document.getElementsByClassName("overlay")[0],
     shortcuts: document.getElementsByClassName("key-commands")[0],
-    verticalResizer: document.getElementsByClassName("separator_vertical")[0]
+    verticalResizer: document.getElementsByClassName("separator_vertical")[0],
+    zoom: document.getElementsByClassName("footer__button_zoom")[0]
 };
 
 function disableSelection() {
@@ -482,3 +483,16 @@ function hideOverlay(callback) {
 
 
 /** TODO: Добавить изменение размеров шрифта. */
+
+pageElements.zoom.addEventListener("focus", showOutline);
+
+function showOutline(event) {
+    if (event.relatedTarget === buttons.consoleButton) {
+        pageElements.zoom.classList.add("footer__button_zoom-outline");
+        pageElements.zoom.addEventListener("blur", hideOutline);
+    }
+}
+function hideOutline() {
+    pageElements.zoom.classList.remove("footer__button_zoom-outline");
+    pageElements.zoom.removeEventListener("blur", hideOutline);
+}
