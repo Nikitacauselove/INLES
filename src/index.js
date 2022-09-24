@@ -16,6 +16,7 @@ const buttons = {
     toggleButton: document.getElementsByClassName("toggle-button")[0]
 };
 const pageElements = {
+    codeMirrors: document.getElementsByClassName("CodeMirror"),
     console: document.getElementsByClassName("console")[0],
     consoleEntries: document.getElementsByClassName("console__entries")[0],
     consoleTextArea: document.getElementsByClassName("command-line__textarea")[0],
@@ -482,7 +483,7 @@ function hideOverlay(callback) {
 }
 
 
-/** TODO: Добавить изменение размеров шрифта. */
+/** Отображение контура для кнопки zoom. */
 
 pageElements.zoom.addEventListener("focus", showOutline);
 
@@ -496,3 +497,23 @@ function hideOutline() {
     pageElements.zoom.classList.remove("footer__button_zoom-outline");
     pageElements.zoom.removeEventListener("blur", hideOutline);
 }
+
+
+/** Изменение размера шрифта в редакторе. */
+
+pageElements.zoom.addEventListener("change", changeFontSize);
+
+function changeFontSize(event) {
+    for (const codeMirror of pageElements.codeMirrors) {
+        removeStyleAttribute(codeMirror);
+        codeMirror.style.fontSize = `${event.target.value * parseInt(window.getComputedStyle(codeMirror).fontSize)}px`;
+    }
+}
+function removeStyleAttribute(element) {
+    element.removeAttribute("style");
+}
+
+
+/** Изменение размера шрифта в редакторе при изменении размеров окна страницы. */
+
+window.matchMedia("(min-width: 767px) and (min-height: 440px)").addEventListener("change", () => [...pageElements.codeMirrors].forEach(removeStyleAttribute));

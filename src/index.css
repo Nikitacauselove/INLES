@@ -1626,7 +1626,7 @@ html:not(.mac) .footer__ctrl-keys {
 
 @media (max-width: 767px), (max-height: 440px) {
     .CodeMirror {
-        font-size: 10px !important;
+        font-size: 10px;
     }
     .CodeMirror-gutters {
         display: none;
