@@ -40,6 +40,23 @@ function disableSelection() {
 }
 
 
+/** Создание редактора. */
+
+function createEditor(element) {
+    CodeMirror.fromTextArea(element, {
+        mode: "text/x-python",
+        lineNumbers: true,
+        lineWrapping: true,
+        scrollbarStyle: "simple",
+        foldGutter: true,
+        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+        theme: "twilight"
+    });
+}
+
+[...document.getElementsByClassName("editor__textarea")].forEach(createEditor);
+
+
 /** Анимация кнопки Run. */
 
 buttons.runButton.addEventListener("click", startRunButtonAnimation);
