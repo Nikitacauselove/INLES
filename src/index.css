@@ -1104,8 +1104,6 @@ body {
 .console__message_error {
     background: rgba(255, 0, 0, 0.2);
 }
-.console__message_log {
-}
 
 .command-line {
     background: rgba(255, 255, 255, 0.1);
