@@ -477,20 +477,6 @@ function closeConsole() {
 }
 
 
-/** Открытие/сокрытие окна Shortcuts. */
-
-buttons.shortcutsButton.addEventListener("click", showShortcuts);
-
-function showShortcuts() {
-    showOverlay(hideShortcuts);
-    pageElements.shortcuts.classList.add("key-commands_display");
-}
-function hideShortcuts() {
-    hideOverlay(hideShortcuts);
-    pageElements.shortcuts.classList.remove("key-commands_display");
-}
-
-
 /** Отображение контура для кнопки zoom. */
 
 pageElements.zoom.addEventListener("focus", showOutline);
