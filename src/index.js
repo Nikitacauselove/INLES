@@ -44,7 +44,7 @@ function createEditor(element) {
 
     switch (attribute) {
         case "editor":
-            CodeMirror.fromTextArea(element, {
+            const editor = CodeMirror.fromTextArea(element, {
                 foldGutter: true,
                 gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                 lineNumbers: true,
@@ -53,6 +53,8 @@ function createEditor(element) {
                 scrollbarStyle: "simple",
                 theme: "twilight"
             });
+
+            editor.focus();
             break;
         case "result":
             CodeMirror.fromTextArea(element, {
