@@ -40,15 +40,33 @@ const disableSelection = () => false;
 /** Создание редактора. */
 
 function createEditor(element) {
-    CodeMirror.fromTextArea(element, {
-        mode: "text/x-python",
-        lineNumbers: true,
-        lineWrapping: true,
-        scrollbarStyle: "simple",
-        foldGutter: true,
-        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-        theme: "twilight"
-    });
+    const attribute = element.getAttribute("data-editor");
+
+    switch (attribute) {
+        case "editor":
+            CodeMirror.fromTextArea(element, {
+                foldGutter: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                lineNumbers: true,
+                lineWrapping: true,
+                mode: "text/x-python",
+                scrollbarStyle: "simple",
+                theme: "twilight"
+            });
+            break;
+        case "result":
+            CodeMirror.fromTextArea(element, {
+                foldGutter: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                lineNumbers: true,
+                lineWrapping: true,
+                mode: "text/x-python",
+                readOnly: "nocursor",
+                scrollbarStyle: "simple",
+                theme: "twilight"
+            });
+            break;
+    }
 }
 
 [...document.getElementsByClassName("editor__textarea")].forEach(createEditor);
@@ -122,8 +140,8 @@ function closeModal() {
     buttons.actionCloseButtons.forEach((button) => button.removeEventListener("click", closeModal));
 }
 function selectModalTab(target) {
-    if (target.hasAttribute("data-settings")) {
-        const attribute = target.getAttribute("data-settings");
+    if (target.hasAttribute("data-editor")) {
+        const attribute = target.getAttribute("data-editor");
 
         switch (attribute) {
             case "editor":
