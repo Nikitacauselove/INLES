@@ -22,7 +22,7 @@ const pageElements = {
     consoleTextArea: document.getElementsByClassName("command-line__textarea")[0],
     dropdowns: document.getElementsByClassName("dropdown"),
     editorContainers: document.getElementsByClassName("main__editor-container"),
-    editors: document.getElementsByClassName("editor"),
+    editor: createEditor(document.getElementsByClassName("editor")[0]),
     footer: document.getElementsByClassName("footer")[0],
     footerExport: document.getElementsByClassName("footer__export")[0],
     formHelps: document.getElementsByClassName("form-help"),
@@ -31,6 +31,7 @@ const pageElements = {
     modal: document.getElementsByClassName("modal")[0],
     modalTabs: document.getElementsByClassName("modal__tab"),
     overlay: document.getElementsByClassName("overlay")[0],
+    result: createEditor(document.getElementsByClassName("editor")[1]),
     shortcuts: document.getElementsByClassName("key-commands")[0],
     verticalResizer: document.getElementsByClassName("separator_vertical")[0],
     zoom: document.getElementsByClassName("footer__button_zoom")[0]
@@ -56,9 +57,9 @@ function createEditor(element) {
             });
 
             editor.focus();
-            break;
+            return editor;
         case "result":
-            CodeMirror(element, {
+            return CodeMirror(element, {
                 foldGutter: true,
                 gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                 lineNumbers: true,
@@ -68,11 +69,8 @@ function createEditor(element) {
                 scrollbarStyle: "simple",
                 theme: "twilight"
             });
-            break;
     }
 }
-
-[...pageElements.editors].forEach(createEditor);
 
 
 /** Открытие/сокрытие навигации для мобильных устройств. */
