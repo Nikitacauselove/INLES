@@ -995,10 +995,6 @@ body {
 
 .editor {
     height: 100%;
-    width: 100%;
-}
-.editor__form {
-    height: 100%;
     position: relative;
     width: 100%;
 }

@@ -21,7 +21,8 @@ const pageElements = {
     consoleEntries: document.getElementsByClassName("console__entries")[0],
     consoleTextArea: document.getElementsByClassName("command-line__textarea")[0],
     dropdowns: document.getElementsByClassName("dropdown"),
-    editors: document.getElementsByClassName("main__editor-container"),
+    editorContainers: document.getElementsByClassName("main__editor-container"),
+    editors: document.getElementsByClassName("editor"),
     footer: document.getElementsByClassName("footer")[0],
     footerExport: document.getElementsByClassName("footer__export")[0],
     formHelps: document.getElementsByClassName("form-help"),
@@ -44,7 +45,7 @@ function createEditor(element) {
 
     switch (attribute) {
         case "editor":
-            const editor = CodeMirror.fromTextArea(element, {
+            const editor = CodeMirror(element, {
                 foldGutter: true,
                 gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                 lineNumbers: true,
@@ -57,7 +58,7 @@ function createEditor(element) {
             editor.focus();
             break;
         case "result":
-            CodeMirror.fromTextArea(element, {
+            CodeMirror(element, {
                 foldGutter: true,
                 gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                 lineNumbers: true,
@@ -71,7 +72,7 @@ function createEditor(element) {
     }
 }
 
-[...document.getElementsByClassName("editor__textarea")].forEach(createEditor);
+[...pageElements.editors].forEach(createEditor);
 
 
 /** Открытие/сокрытие навигации для мобильных устройств. */
@@ -161,7 +162,7 @@ function selectModalTab(target) {
 
 const changeActiveTab = changeActiveTabClosure();
 
-Array.from(buttons.modalButtons).forEach((link) => link.addEventListener("click", modalButtonMapping));
+[...buttons.modalButtons].forEach((link) => link.addEventListener("click", modalButtonMapping));
 
 function modalButtonMapping(event) {
     switch (event.target) {
@@ -193,7 +194,7 @@ function changeActiveTabClosure() {
 
 let formHelp, previousFormHelp;
 
-Array.from(buttons.formHelpButtons).forEach((button) => button.addEventListener("click", showFormHelp));
+[...buttons.formHelpButtons].forEach((button) => button.addEventListener("click", showFormHelp));
 
 function showFormHelp(event) {
     const attribute = event.target.getAttribute("data-form-help");
@@ -235,21 +236,21 @@ function formHelpMapping(attribute, formsHelp) {
 
 const changeSelectedEditor = changeSelectedEditorClosure();
 
-Array.from(buttons.mainNavButtons).forEach((button) => button.addEventListener("click", buttonMapping));
+[...buttons.mainNavButtons].forEach((button) => button.addEventListener("click", buttonMapping));
 
 function buttonMapping(event) {
     switch (event.target) {
         case buttons.mainNavButtons[0]:
-            changeSelectedEditor(buttons.mainNavButtons[0], pageElements.editors[0]);
+            changeSelectedEditor(buttons.mainNavButtons[0], pageElements.editorContainers[0]);
             break;
         case buttons.mainNavButtons[1]:
-            changeSelectedEditor(buttons.mainNavButtons[1], pageElements.editors[1]);
+            changeSelectedEditor(buttons.mainNavButtons[1], pageElements.editorContainers[1]);
             break;
     }
 }
 function changeSelectedEditorClosure() {
     let selectedButton = buttons.mainNavButtons[0];
-    let selectedEditor = pageElements.editors[0];
+    let selectedEditor = pageElements.editorContainers[0];
 
     return function(button, editor) {
         selectedButton.classList.remove("main-nav__button_selected");
@@ -267,7 +268,7 @@ function changeSelectedEditorClosure() {
 
 let dropdown, previousDropdown;
 
-Array.from(buttons.dropdownButtons).forEach((button) => button.addEventListener("click", showDropdown));
+[...buttons.dropdownButtons].forEach((button) => button.addEventListener("click", showDropdown));
 
 function showDropdown(event) {
     const attribute = event.target.getAttribute("data-dropdown");
@@ -420,7 +421,7 @@ buttons.consoleClearButton.addEventListener("click", clearConsole);
 function clearConsole() {
     const entries = document.getElementsByClassName("console__message");
 
-    Array.from(entries).forEach((currentValue) => currentValue.parentNode.removeChild(currentValue));
+    [...entries].forEach((currentValue) => currentValue.parentNode.removeChild(currentValue));
 }
 
 
