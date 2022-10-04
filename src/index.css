@@ -995,8 +995,16 @@ body {
 
 .editor {
     height: 100%;
+    opacity: 1;
     position: relative;
     width: 100%;
+}
+.editor:not(.editor_hidden) {
+    animation: show-editor 1s ease;
+}
+.editor_hidden {
+    opacity: 0;
+    visibility: hidden;
 }
 
 .console {
@@ -1122,6 +1130,12 @@ body {
     overflow: hidden;
     padding: 7px 0 7px 7px;
     resize: none;
+}
+
+@keyframes show-editor {
+    to {
+        opacity: 1;
+    }
 }
 
 @media (max-width: 767px), (max-height: 440px) {

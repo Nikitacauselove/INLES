@@ -15,6 +15,7 @@ const buttons = {
     shortcutsButton: document.getElementsByClassName("footer__button_shortcuts")[0],
     toggleButton: document.getElementsByClassName("toggle-button")[0]
 };
+const spinnerAnimationTime = 2000;
 const pageElements = {
     codeMirrors: document.getElementsByClassName("CodeMirror"),
     console: document.getElementsByClassName("console")[0],
@@ -109,6 +110,26 @@ function endRunButtonAnimation() {
     buttons.runButton.disabled = false;
     buttons.runButton.classList.remove("nav__button_loading");
     buttons.runButton.removeEventListener("animationend", endRunButtonAnimation);
+}
+
+
+/** Работа вкладки Result. */
+
+buttons.runButton.addEventListener("click", updateResult);
+
+function updateResult() {
+    hideResult();
+    setTimeout(showResult, spinnerAnimationTime);
+}
+function hideResult() {
+    const element = pageElements.result.getWrapperElement().parentElement;
+
+    element.classList.add("editor_hidden");
+}
+function showResult() {
+    const element = pageElements.result.getWrapperElement().parentElement;
+
+    element.classList.remove("editor_hidden");
 }
 
 
@@ -461,6 +482,7 @@ function createMessage(type, value) {
     }
     return message;
 }
+
 
 /** Открытие/сокрытие консоли. */
 
