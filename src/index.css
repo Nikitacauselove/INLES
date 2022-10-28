@@ -1488,6 +1488,9 @@ html:not(.mac) .footer__ctrl-keys {
 .CodeMirror-lines {
     padding-bottom: 556px;
 }
+.CodeMirror-line span {
+    color: #ddca7e;
+}
 .CodeMirror pre.CodeMirror-line, .CodeMirror pre.CodeMirror-line-like {
     z-index: 0;
 }

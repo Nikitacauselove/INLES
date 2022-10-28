@@ -33,6 +33,7 @@ const pageElements = {
     modalTabs: document.getElementsByClassName("modal__tab"),
     overlay: document.getElementsByClassName("overlay")[0],
     result: createEditor(document.getElementsByClassName("editor")[1]),
+    resultTooltip: ["Try the following:", "", "1. Use different phrasing or notations", "2. Enter whole words instead of abbreviations", "3. Avoid mixing mathematical and other notations", "4. Check your spelling", "5. Give your input in English"],
     shortcuts: document.getElementsByClassName("key-commands")[0],
     verticalResizer: document.getElementsByClassName("separator_vertical")[0],
     zoom: document.getElementsByClassName("footer__button_zoom")[0]
@@ -119,12 +120,18 @@ buttons.runButton.addEventListener("click", updateResult);
 
 function updateResult() {
     hideResult();
+    addTooltip();
     setTimeout(showResult, spinnerAnimationTime);
+}
+function addTooltip() {
+    pageElements.result.setOption("lineNumbers", false);
+    pageElements.result.setValue(pageElements.resultTooltip.join("\n"));
 }
 function hideResult() {
     const element = pageElements.result.getWrapperElement().parentElement;
 
     element.classList.add("editor_hidden");
+    pageElements.result.setOption("lineNumbers", true);
 }
 function showResult() {
     const element = pageElements.result.getWrapperElement().parentElement;
