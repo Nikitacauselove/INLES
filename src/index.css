@@ -1133,6 +1133,9 @@ body {
 }
 
 @keyframes show-editor {
+    from {
+        opacity: 0;
+    }
     to {
         opacity: 1;
     }
