@@ -174,10 +174,10 @@ function selectModalTab(target) {
 
         switch (attribute) {
             case "editor":
-                changeActiveTab(buttons.modalButtons[0], pageElements.modalTabs[0]);
+                changeActiveTab(buttons.modalButtons[0], pageElements.modalTabs[0], true);
                 break;
             case "result":
-                changeActiveTab(buttons.modalButtons[1], pageElements.modalTabs[1]);
+                changeActiveTab(buttons.modalButtons[1], pageElements.modalTabs[1], true);
                 break;
         }
     }
@@ -204,7 +204,13 @@ function changeActiveTabClosure() {
     let activeButton = buttons.modalButtons[0];
     let activeTab = pageElements.modalTabs[0];
 
-    return function(button, tab) {
+    return function(button, tab, fastTransition = false) {
+        if (fastTransition) {
+            activeButton.classList.add("modal__button_fast-transition");
+            button.classList.add("modal__button_fast-transition");
+        } else {
+            activeButton.classList.remove("modal__button_fast-transition");
+        }
         activeButton.classList.remove("modal__button_active");
         activeButton = button;
         activeButton.classList.add("modal__button_active");

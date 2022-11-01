@@ -480,6 +480,9 @@ body {
 .modal__button_active:before {
     transform: translateX(0);
 }
+.modal__button_fast-transition {
+    transition-duration: 0s;
+}
 
 .modal__tab {
     display: none;
