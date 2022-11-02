@@ -62,12 +62,13 @@ function createEditor(element) {
             return editor;
         case "result":
             return CodeMirror(element, {
+                cursorHeight: 0,
                 foldGutter: true,
                 gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
                 lineNumbers: true,
                 lineWrapping: true,
                 mode: "text/x-python",
-                readOnly: "nocursor",
+                readOnly: true,
                 scrollbarStyle: "simple",
                 theme: "twilight"
             });
