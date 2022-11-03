@@ -99,17 +99,21 @@ function isNavActions(className) {
 
 /** Анимация кнопки Run. */
 
+buttons.runButton.addEventListener("animationstart", () => {
+    if (window.matchMedia("(min-width: 767px) and (min-height: 440px)").matches) {
+        buttons.runButton.disabled = true;
+    }
+});
+buttons.runButton.addEventListener("animationend", () => buttons.runButton.disabled = false);
 buttons.runButton.addEventListener("click", startRunButtonAnimation);
 
 function startRunButtonAnimation() {
     if (window.matchMedia("(min-width: 767px) and (min-height: 440px)").matches) {
-        buttons.runButton.disabled = true;
         buttons.runButton.classList.add("nav__button_loading");
         buttons.runButton.addEventListener("animationend", endRunButtonAnimation);
     }
 }
 function endRunButtonAnimation() {
-    buttons.runButton.disabled = false;
     buttons.runButton.classList.remove("nav__button_loading");
     buttons.runButton.removeEventListener("animationend", endRunButtonAnimation);
 }

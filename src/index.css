@@ -809,6 +809,7 @@ body {
     left: 53px;
     line-height: 1.2;
     padding-left: 2px;
+    pointer-events: none;
     position: absolute;
     top: 7px;
     transition: transform 0.2s;
