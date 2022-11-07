@@ -86,7 +86,7 @@ function openMobileNavigation() {
     document.addEventListener("click", closeMobileNavigation);
 }
 function closeMobileNavigation(event) {
-    if (!isNavActions(event.target.className)) {
+    if (event.target.classList[0] && !isNavActions(event.target.classList[0])) {
         buttons.navActions.classList.remove("nav__actions_open");
         buttons.toggleButton.classList.remove("toggle-button_expanded");
         document.removeEventListener("click", closeMobileNavigation);
