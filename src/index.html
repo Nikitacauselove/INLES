@@ -125,11 +125,11 @@
                         <ul class="dropdown">
                             <li>
                                 <label class="dropdown__button" tabindex="0">
-                                    <input class="dropdown__input" type="file">Load File
+                                    <input class="dropdown__input" accept="text/plain" type="file">Load File
                                 </label>
                             </li>
                             <li>
-                                <button class="dropdown__button">Download File</button>
+                                <button class="dropdown__button" data-editor="editor">Download File</button>
                             </li>
                         </ul>
                     </div>
@@ -137,7 +137,7 @@
                 <article class="editor" data-editor="editor"></article>
             </section>
             <div class="main__separator separator separator_resizer">
-                <h2 class="separator__title main__title_horizontal">
+                <h2 class="separator__title">
                     <span>Result</span>
                 </h2>
             </div>
@@ -173,7 +173,7 @@
                         </button>
                         <ul class="dropdown">
                             <li>
-                                <button class="dropdown__button">Download File</button>
+                                <button class="dropdown__button" data-editor="result">Download File</button>
                             </li>
                         </ul>
                     </div>

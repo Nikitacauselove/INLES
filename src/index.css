@@ -402,6 +402,7 @@ body {
     top: 7px;
     transition: transform 0.2s;
     transform-origin: left center;
+    user-select: none;
     vertical-align: middle;
     z-index: 0;
 }
@@ -482,15 +483,6 @@ body {
     transition: transform 0.2s;
     transform-origin: left center;
     vertical-align: middle;
-}
-.main__title_horizontal {
-    left: 53px;
-    position: absolute;
-    top: 7px;
-    z-index: 0;
-}
-.main__title_vertical {
-    transform: translate(-45px, -11px) rotate(90deg) scale(0.8);
 }
 .main__title-text_hidden {
     visibility: hidden;
@@ -1452,23 +1444,16 @@ body {
 
 /*                  CodeMirror переопределение стилей                  */
 
-.CodeMirror, .console-logs .console-line, .console-command-line-input, .console-message, .CodeMirror-hint {
-    font-size: 14px;
-    font-family: Monaco, monospace;
-}
-
-.cm-keyword { color:#ddca7e !important; }
-.cm-variable { color: #ddca7e; }
-.cm-property { color: #9a8297; }
-.cm-string { color:#96b38a !important; }
-
 .CodeMirror {
-    color: white;
     background: transparent;
+    color: white;
+    font-family: Monaco, monospace;
+    font-size: 14px;
     height: 100%;
     position: absolute;
     width: 100%;
 }
+
 .CodeMirror-lines {
     padding-bottom: 556px;
 }
@@ -1478,14 +1463,24 @@ body {
 .CodeMirror pre.CodeMirror-line, .CodeMirror pre.CodeMirror-line-like {
     z-index: 0;
 }
+
 .CodeMirror-gutters {
     background: transparent;
     border-right: none;
     z-index: 0;
 }
+
 .CodeMirror-cursor {
     border-left: 1px solid white;
 }
+
+.cm-s-default .cm-variable {
+    color: #ddca7e;
+}
+.cm-s-default .cm-property {
+    color: #9a8297;
+}
+
 .CodeMirror-scroll {
     margin-bottom: -30px;
     margin-right: -30px;
@@ -1493,61 +1488,95 @@ body {
 }
 .CodeMirror-sizer {
     min-width: 200px;
-
 }
+
 .CodeMirror-gutter-wrapper {
     z-index: 0;
 }
+
 .CodeMirror-focused .CodeMirror-selected {
     background: rgba(255,255,255,0.05);
-}
-
-.CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
-    background: #666b7a;
-}
-.CodeMirror-simplescroll-horizontal, .CodeMirror-simplescroll-vertical {
-    z-index: 1;
-}
-.CodeMirror-simplescroll-horizontal {
-    height: 8px;
-}
-.CodeMirror-simplescroll-vertical {
-    background: none;
-    width: 9px;
-}
-.CodeMirror-simplescroll-vertical div {
-    border: none;
-    border-radius: 0;
-    background-clip: padding-box !important;
-    border-right: 4px solid transparent;
 }
 
 @media (max-width: 767px), (max-height: 440px) {
     .CodeMirror {
         font-size: 10px;
     }
+
     .CodeMirror-gutters {
         display: none;
     }
+
     .CodeMirror-sizer {
         margin-left: 0 !important;
     }
+
     .CodeMirror-gutter-wrapper {
         display: none;
     }
 }
 
 
+/*                  CodeMirror переопределение стилей для scroll                  */
+
+.CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
+    background: #666b7a;
+}
+
+.CodeMirror-simplescroll-horizontal, .CodeMirror-simplescroll-vertical {
+    z-index: 1;
+}
+
+.CodeMirror-simplescroll-horizontal {
+    height: 8px;
+}
+
+.CodeMirror-simplescroll-vertical {
+    background: none;
+    width: 9px;
+}
+.CodeMirror-simplescroll-vertical div {
+    background-clip: padding-box !important;
+    border: none;
+    border-radius: 0;
+    border-right: 4px solid transparent;
+}
+
+
 /*                  CodeMirror переопределение стилей для theme                 */
 
-.cm-s-twilight div.CodeMirror-selected { background: rgba(255,255,255,0.05); }
-.cm-s-twilight.CodeMirror { background: var(--main-background); }
+.cm-s-twilight.CodeMirror {
+    background: var(--main-background);
+}
+.cm-s-twilight div.CodeMirror-selected {
+    background: rgba(255,255,255,0.05);
+}
 
-.cm-s-twilight .CodeMirror-gutters { background: none; border-right: none; }
-.cm-s-twilight .CodeMirror-linenumber { color: #34363e; }
+.cm-s-twilight .CodeMirror-gutters {
+    background: none;
+    border-right: none;
+}
+.cm-s-twilight .CodeMirror-linenumber {
+    color: #34363e;
+}
 
-.cm-s-twilight .cm-operator { color: #ccc; }
-.cm-s-twilight .cm-comment { color: #717790; font-style: normal; }
-.cm-s-twilight .cm-string { font-style: normal; }
-.cm-s-twilight .cm-builtin { color: #ddca7e; }
-.cm-s-twilight .cm-error { border-bottom: none; }
+.cm-s-twilight .cm-keyword {
+    color: #ddca7e;
+}
+.cm-s-twilight .cm-operator {
+    color: #ccc;
+}
+.cm-s-twilight .cm-comment {
+    color: #717790;
+    font-style: normal;
+}
+.cm-s-twilight .cm-string {
+    color: #96b38a;
+    font-style: normal;
+}
+.cm-s-twilight .cm-builtin {
+    color: #ddca7e;
+}
+.cm-s-twilight .cm-error {
+    border-bottom: none;
+}
