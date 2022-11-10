@@ -4,6 +4,7 @@ const buttons = {
     consoleClearButton: document.getElementsByClassName("console__button_clear")[0],
     consoleCloseButton: document.getElementsByClassName("console__button_close")[0],
     consoleButton: document.getElementsByClassName("footer__button_console")[0],
+    downloadButtons: document.querySelectorAll("button.dropdown__button"),
     dropdownButtons: document.getElementsByClassName("button_dropdown"),
     exportButton: document.getElementsByClassName("footer__button_export")[0],
     formHelpButtons: document.getElementsByClassName("form__help-button"),
@@ -28,6 +29,7 @@ const pageElements = {
     footerExport: document.getElementsByClassName("footer__export")[0],
     formHelps: document.getElementsByClassName("form-help"),
     horizontalResizer: document.getElementsByClassName("separator_resizer")[0],
+    loadFileInput: document.getElementsByClassName("dropdown__input")[0],
     mainSection: document.getElementsByClassName("main__inner-container")[0],
     modal: document.getElementsByClassName("modal")[0],
     modalTabs: document.getElementsByClassName("modal__tab"),
@@ -39,6 +41,7 @@ const pageElements = {
     zoom: document.getElementsByClassName("footer__button_zoom")[0]
 };
 const disableSelection = () => false;
+const enableSelection = () => true;
 
 
 /** Создание редактора. */
@@ -341,6 +344,46 @@ function isDropdownButton(target) {
 }
 
 
+/** Сохранение текстовых файлов. */
+
+pageElements.loadFileInput.addEventListener("change", loadFile);
+
+function loadFile(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => pageElements.editor.setValue(reader.result));
+    reader.readAsText(file);
+}
+
+
+/** Сохранение текстовых файлов. */
+
+[...buttons.downloadButtons].forEach((button) => button.addEventListener("click", downloadFile));
+
+function downloadFile(event) {
+    const attribute = event.target.getAttribute("data-editor");
+    const file = createFile(attribute);
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(file);
+
+    link.href = url;
+    link.download = file.name;
+    document.body.appendChild(link);
+    link.click();
+
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(link);
+}
+function createFile(attribute) {
+    if (attribute === "editor") {
+        return new File([pageElements.editor.getValue()], "editor.txt", {type: "text/plain"});
+    } else {
+        return new File([pageElements.result.getValue()], "result.txt", {type: "text/plain"});
+    }
+}
+
+
 /** Изменение размеров окна редактора. */
 
 let nextElement, previousElement;
@@ -378,6 +421,7 @@ function mouseDragX(event) {
     changeTitleOrientation(dx);
 }
 function mouseStopX() {
+    document.body.onselectstart = enableSelection;
     document.removeEventListener("mousemove", mouseDragX);
     document.removeEventListener("mouseup", mouseStopX);
 }
@@ -406,8 +450,6 @@ function getElementWidth(element) {
 const mainMinHeight = parseFloat(window.getComputedStyle(pageElements.mainSection).minHeight);
 const verticalResizerHeight = getElementHeight(pageElements.verticalResizer);
 let consoleHeight, footerHeight, mainHeight, originalMousePositionY, pageHeight;
-
-pageElements.verticalResizer.addEventListener("mousedown", mouseStartY);
 
 function mouseStartY(event) {
     document.body.focus();
@@ -507,14 +549,20 @@ function createMessage(type, value) {
 buttons.consoleButton.addEventListener("click", openConsole);
 
 function openConsole() {
-    pageElements.console.classList.toggle("console_display");
-    pageElements.verticalResizer.classList.toggle("separator_console-open");
+    pageElements.console.classList.add("console_display");
+    pageElements.verticalResizer.classList.add("separator_console-open");
+
+    buttons.consoleButton.addEventListener("click", closeConsole);
     buttons.consoleCloseButton.addEventListener("click", closeConsole);
+    pageElements.verticalResizer.addEventListener("mousedown", mouseStartY);
 }
 function closeConsole() {
     pageElements.console.classList.remove("console_display");
     pageElements.verticalResizer.classList.remove("separator_console-open");
+
+    buttons.consoleButton.removeEventListener("click", closeConsole);
     buttons.consoleCloseButton.removeEventListener("click", closeConsole);
+    pageElements.verticalResizer.removeEventListener("mousedown", mouseStartY);
 }
 
 
