@@ -11,7 +11,6 @@ const buttons = {
     formHelpCloseButtons: document.getElementsByClassName("form-help__close-button"),
     mainNavButtons: document.getElementsByClassName("main-nav__button"),
     modalButtons: document.getElementsByClassName("modal__button"),
-    navActions: document.getElementsByClassName("nav__actions")[0],
     runButton: document.getElementsByClassName("nav__button_run")[0],
     shortcutsButton: document.getElementsByClassName("footer__button_shortcuts")[0],
     toggleButton: document.getElementsByClassName("toggle-button")[0]
@@ -23,16 +22,18 @@ const pageElements = {
     consoleEntries: document.getElementsByClassName("console__entries")[0],
     consoleTextArea: document.getElementsByClassName("command-line__textarea")[0],
     dropdowns: document.getElementsByClassName("dropdown"),
-    editorContainers: document.getElementsByClassName("main__editor-container"),
     editor: createEditor(document.getElementsByClassName("editor")[0]),
+    editorContainers: document.getElementsByClassName("main__editor-container"),
     footer: document.getElementsByClassName("footer")[0],
     footerExport: document.getElementsByClassName("footer__export")[0],
     formHelps: document.getElementsByClassName("form-help"),
+    formTemplate: document.querySelector("template"),
     horizontalResizer: document.getElementsByClassName("separator_resizer")[0],
     loadFileInput: document.getElementsByClassName("dropdown__input")[0],
     mainSection: document.getElementsByClassName("main__inner-container")[0],
     modal: document.getElementsByClassName("modal")[0],
     modalTabs: document.getElementsByClassName("modal__tab"),
+    navActions: document.getElementsByClassName("nav__actions")[0],
     overlay: document.getElementsByClassName("overlay")[0],
     result: createEditor(document.getElementsByClassName("editor")[1]),
     resultTooltip: ["Try the following:", "", "1. Use different phrasing or notations", "2. Enter whole words instead of abbreviations", "3. Avoid mixing mathematical and other notations", "4. Check your spelling", "5. Give your input in English"],
@@ -84,13 +85,13 @@ function createEditor(element) {
 buttons.toggleButton.addEventListener("click", openMobileNavigation);
 
 function openMobileNavigation() {
-    buttons.navActions.classList.toggle("nav__actions_open");
+    pageElements.navActions.classList.toggle("nav__actions_open");
     buttons.toggleButton.classList.toggle("toggle-button_expanded");
     document.addEventListener("click", closeMobileNavigation);
 }
 function closeMobileNavigation(event) {
     if (event.target.classList[0] && !isNavActions(event.target.classList[0])) {
-        buttons.navActions.classList.remove("nav__actions_open");
+        pageElements.navActions.classList.remove("nav__actions_open");
         buttons.toggleButton.classList.remove("toggle-button_expanded");
         document.removeEventListener("click", closeMobileNavigation);
     }
@@ -230,6 +231,26 @@ function changeActiveTabClosure() {
 }
 
 
+/** Добавление форм для начальных значений (guess values). */
+
+function addForms(guessValues) {
+    for (const element of guessValues) {
+        pageElements.formTemplate.parentNode.append(createForm(element.name, element.value));
+    }
+}
+function createForm(name, value) {
+    const form = pageElements.formTemplate.content.cloneNode(true);
+    const input = form.querySelector(".form__input");
+    const label = form.querySelector(".form__label");
+
+    input.setAttribute("id", `input-${name}`);
+    input.setAttribute("value", value);
+    label.setAttribute("for", `input-${name}`);
+    label.textContent = `Input ${name}`;
+    return form;
+}
+
+
 /** Открытие/сокрытие подсказок. */
 
 let formHelp, previousFormHelp;
@@ -254,20 +275,20 @@ function hideFormHelp() {
 function hidePreviousFormHelp() {
     previousFormHelp.classList.remove("form-help_display");
 }
-function formHelpMapping(attribute, formsHelp) {
+function formHelpMapping(attribute, formHelp) {
     switch (attribute) {
         case "trigonometry-mode":
-            return formsHelp[0];
+            return formHelp[0];
         case "x-tolerance":
-            return formsHelp[1];
+            return formHelp[1];
         case "max-iterations":
-            return formsHelp[2]
+            return formHelp[2]
         case "finite-difference-step":
-            return formsHelp[3];
+            return formHelp[3];
         case "decimal-places":
-            return formsHelp[4];
+            return formHelp[4];
         case "input-a":
-            return formsHelp[5];
+            return formHelp[5];
     }
 }
 
