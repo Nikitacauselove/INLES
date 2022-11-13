@@ -244,14 +244,14 @@ body {
     display: none;
 }
 
-@keyframes show-loading-spinner {
-    to {
-        transform: rotate(2turn);
-    }
-}
 @keyframes hide-loading-spinner {
     to {
         border-top-color: transparent;
+    }
+}
+@keyframes show-loading-spinner {
+    to {
+        transform: rotate(2turn);
     }
 }
 @keyframes show-text {
@@ -581,7 +581,7 @@ body {
     position: relative;
     width: 100%;
 }
-.editor:not(.editor_hidden) {
+.editor_animated {
     animation: show-editor 1s ease;
 }
 .editor_hidden {

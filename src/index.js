@@ -16,6 +16,7 @@ const buttons = {
     toggleButton: document.getElementsByClassName("toggle-button")[0]
 };
 const spinnerAnimationTime = 2000;
+const resultFadeInTime = 1000;
 const pageElements = {
     codeMirrors: document.getElementsByClassName("CodeMirror"),
     console: document.getElementsByClassName("console")[0],
@@ -36,6 +37,7 @@ const pageElements = {
     navActions: document.getElementsByClassName("nav__actions")[0],
     overlay: document.getElementsByClassName("overlay")[0],
     result: createEditor(document.getElementsByClassName("editor")[1]),
+    resultParentElement: document.querySelector(".editor[data-editor='result']"),
     resultTooltip: ["Try the following:", "", "1. Use different phrasing or notations", "2. Enter whole words instead of abbreviations", "3. Avoid mixing mathematical and other notations", "4. Check your spelling", "5. Give your input in English"],
     shortcuts: document.getElementsByClassName("key-commands")[0],
     verticalResizer: document.getElementsByClassName("separator_vertical")[0],
@@ -123,29 +125,32 @@ function endRunButtonAnimation() {
 }
 
 
+/** Анимация вкладки Result. */
+
+buttons.runButton.addEventListener("click", hideResult);
+
+function hideResult() {
+    pageElements.resultParentElement.classList.add("editor_hidden");
+    setTimeout(showResult, spinnerAnimationTime);
+}
+function showResult() {
+    pageElements.resultParentElement.classList.add("editor_animated");
+    pageElements.resultParentElement.classList.remove("editor_hidden");
+    setTimeout(() => pageElements.resultParentElement.classList.remove("editor_animated"), resultFadeInTime);
+}
+
+
 /** Работа вкладки Result. */
 
 buttons.runButton.addEventListener("click", updateResult);
 
 function updateResult() {
-    hideResult();
+    pageElements.result.setOption("lineNumbers", true);
     addTooltip();
-    setTimeout(showResult, spinnerAnimationTime);
 }
 function addTooltip() {
     pageElements.result.setOption("lineNumbers", false);
     pageElements.result.setValue(pageElements.resultTooltip.join("\n"));
-}
-function hideResult() {
-    const element = pageElements.result.getWrapperElement().parentElement;
-
-    element.classList.add("editor_hidden");
-    pageElements.result.setOption("lineNumbers", true);
-}
-function showResult() {
-    const element = pageElements.result.getWrapperElement().parentElement;
-
-    element.classList.remove("editor_hidden");
 }
 
 
@@ -279,9 +284,9 @@ function formHelpMapping(attribute, formHelp) {
     switch (attribute) {
         case "trigonometry-mode":
             return formHelp[0];
-        case "x-tolerance":
+        case "tolerance":
             return formHelp[1];
-        case "max-iterations":
+        case "maximum-iterations":
             return formHelp[2]
         case "finite-difference-step":
             return formHelp[3];
