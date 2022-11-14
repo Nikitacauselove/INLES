@@ -15,8 +15,8 @@ const buttons = {
     shortcutsButton: document.getElementsByClassName("footer__button_shortcuts")[0],
     toggleButton: document.getElementsByClassName("toggle-button")[0]
 };
-const spinnerAnimationTime = 2000;
-const resultFadeInTime = 1000;
+const disableSelection = () => false;
+const enableSelection = () => true;
 const pageElements = {
     codeMirrors: document.getElementsByClassName("CodeMirror"),
     console: document.getElementsByClassName("console")[0],
@@ -33,6 +33,7 @@ const pageElements = {
     loadFileInput: document.getElementsByClassName("dropdown__input")[0],
     mainSection: document.getElementsByClassName("main__inner-container")[0],
     modal: document.getElementsByClassName("modal")[0],
+    modalForms: document.getElementsByClassName("modal__form"),
     modalTabs: document.getElementsByClassName("modal__tab"),
     navActions: document.getElementsByClassName("nav__actions")[0],
     overlay: document.getElementsByClassName("overlay")[0],
@@ -43,8 +44,8 @@ const pageElements = {
     verticalResizer: document.getElementsByClassName("separator_vertical")[0],
     zoom: document.getElementsByClassName("footer__button_zoom")[0]
 };
-const disableSelection = () => false;
-const enableSelection = () => true;
+const resultFadeInTime = 1000;
+const spinnerAnimationTime = 2000;
 
 
 /** Создание редактора. */
@@ -236,11 +237,23 @@ function changeActiveTabClosure() {
 }
 
 
+/** Работа форм модального окна. */
+
+[...pageElements.modalForms].forEach((form) => form.addEventListener("submit", formInput));
+
+function formInput(event) {
+    event.preventDefault();
+}
+
+
 /** Добавление форм для начальных значений (guess values). */
 
 function addForms(guessValues) {
     for (const element of guessValues) {
-        pageElements.formTemplate.parentNode.append(createForm(element.name, element.value));
+        const form = createForm(element.name, element.value);
+
+        pageElements.formTemplate.parentNode.append(form);
+        pageElements.formTemplate.parentNode.lastElementChild.addEventListener("submit", formInput);
     }
 }
 function createForm(name, value) {
@@ -370,7 +383,7 @@ function isDropdownButton(target) {
 }
 
 
-/** Сохранение текстовых файлов. */
+/** Загрузка текстовых файлов. */
 
 pageElements.loadFileInput.addEventListener("change", loadFile);
 
@@ -536,7 +549,6 @@ pageElements.consoleTextArea.addEventListener("keypress", consoleInput);
 
 function consoleInput(event) {
     if (event.key === "Enter") {
-        event.preventDefault();
         addNewEntry(pageElements.consoleTextArea.value);
         pageElements.consoleTextArea.value = "";
     }
