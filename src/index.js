@@ -549,6 +549,7 @@ pageElements.consoleTextArea.addEventListener("keypress", consoleInput);
 
 function consoleInput(event) {
     if (event.key === "Enter") {
+        event.preventDefault();
         addNewEntry(pageElements.consoleTextArea.value);
         pageElements.consoleTextArea.value = "";
     }

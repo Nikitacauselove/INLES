@@ -272,11 +272,6 @@ body {
         height: 53px;
     }
 }
-@media (max-width: 767px) and (orientation: landscape), (max-height: 440px) and (orientation: landscape) {
-    .nav {
-        border-bottom: 1px solid var(--button-border-background);
-    }
-}
 @media (max-width: 767px), (max-height: 440px) {
     .nav__title {
         margin: 0;
@@ -335,6 +330,11 @@ body {
     }
     .nav__button-icon_run {
         display: inline-block;
+    }
+}
+@media (max-width: 767px) and (orientation: landscape), (max-height: 440px) and (orientation: landscape) {
+    .nav {
+        border-bottom: 1px solid var(--button-border-background);
     }
 }
 @media (max-width: 550px) {
@@ -1233,19 +1233,14 @@ body {
     .console {
         border-top: 1px solid var(--button-border-background);
     }
-    .console__resizer {
-        display: none;
-    }
     .console__actions-container {
         height: 40px;
         padding-top: 7px;
     }
 }
-@media (min-height: 440px) and (min-width: 768px) {
-    .console__resizer {
-        background: var(--button-border-background);
-        cursor: auto;
-        height: 3px;
+@media (min-width: 768px) and (min-height: 440px) {
+    .console__actions-container {
+        border-top: 3px solid var(--button-border-background);
     }
 }
 
@@ -1454,9 +1449,6 @@ body {
     width: 100%;
 }
 
-.CodeMirror-lines {
-    padding-bottom: 556px;
-}
 .CodeMirror-line span {
     color: #ddca7e;
 }
@@ -1521,24 +1513,27 @@ body {
 
 .CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
     background: #666b7a;
+    background-clip: padding-box !important;
+    border: none;
+    border-radius: 0;
 }
 
 .CodeMirror-simplescroll-horizontal, .CodeMirror-simplescroll-vertical {
+    background: none;
     z-index: 1;
 }
 
 .CodeMirror-simplescroll-horizontal {
-    height: 8px;
+    height: 9px;
+}
+.CodeMirror-simplescroll-horizontal div {
+    border-bottom: 4px solid transparent;
 }
 
 .CodeMirror-simplescroll-vertical {
-    background: none;
     width: 9px;
 }
 .CodeMirror-simplescroll-vertical div {
-    background-clip: padding-box !important;
-    border: none;
-    border-radius: 0;
     border-right: 4px solid transparent;
 }
 
