@@ -842,11 +842,12 @@ body {
     display: block;
 }
 .modal__tab::-webkit-scrollbar {
-    height: 0.5em;
-    width: 0.5em;
+    width: 9px;
 }
 .modal__tab::-webkit-scrollbar-thumb {
     background: #717790;
+    background-clip: padding-box;
+    border-right: 4px solid transparent;
 }
 .modal__form {
     margin: 0 0 1rem 0;
@@ -1535,6 +1536,12 @@ body {
 }
 .CodeMirror-simplescroll-vertical div {
     border-right: 4px solid transparent;
+}
+
+@media (max-width: 767px), (max-height: 440px) {
+    .CodeMirror-simplescroll-vertical {
+        transform: translateX(-9px);
+    }
 }
 
 
