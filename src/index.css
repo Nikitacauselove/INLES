@@ -41,6 +41,7 @@ body {
     flex-direction: column;
     height: 100%;
     padding-bottom: 30px;
+    overflow: hidden;
 }
 
 @media (max-width: 830px) {
@@ -514,6 +515,7 @@ body {
     pointer-events: none;
     transform: scale(0.9);
     transition: opacity 0.4s linear, transform 0.4s ease-in-out, -webkit-transform 0.4s ease-in-out;
+    user-select: none;
 }
 .unsaved-message__count {
     font-weight: 700;
@@ -1560,6 +1562,7 @@ body {
 }
 .cm-s-twilight .CodeMirror-linenumber {
     color: #34363e;
+    user-select: none;
 }
 
 .cm-s-twilight .cm-keyword {
