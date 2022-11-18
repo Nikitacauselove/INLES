@@ -339,6 +339,17 @@ function changeSelectedEditorClosure() {
         selectedEditor.classList.remove("main__editor-container_selected");
         selectedEditor = editor;
         selectedEditor.classList.add("main__editor-container_selected");
+        refreshEditor(selectedEditor.getAttribute("data-editor"));
+    }
+}
+function refreshEditor(attribute) {
+    switch (attribute) {
+        case "editor":
+            pageElements.editor.refresh();
+            break;
+        case "result":
+            pageElements.result.refresh();
+            break;
     }
 }
 
@@ -391,7 +402,7 @@ function loadFile(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
 
-    reader.addEventListener('load', () => pageElements.editor.setValue(reader.result));
+    reader.addEventListener("load", () => pageElements.editor.setValue(reader.result));
     reader.readAsText(file);
 }
 
@@ -529,7 +540,11 @@ function getElementHeight(element) {
 
 /** Изменение размеров окна консоли при изменении размеров окна страницы. */
 
-window.matchMedia("(max-width: 767px) or (max-height: 440px)").addEventListener("change", () => pageElements.console.style.height = `195px`);
+window.matchMedia("(max-width: 767px) or (max-height: 440px)").addEventListener("change", () => {
+    pageElements.console.style.height = "195px";
+    refreshEditor("editor");
+    refreshEditor("result");
+});
 
 
 /** Очистка консоли. */
