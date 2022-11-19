@@ -17,6 +17,7 @@ const buttons = {
 };
 const disableSelection = () => false;
 const enableSelection = () => true;
+const navActionsTransitionDuration = 200;
 const pageElements = {
     codeMirrors: document.getElementsByClassName("CodeMirror"),
     console: document.getElementsByClassName("console")[0],
@@ -44,7 +45,7 @@ const pageElements = {
     verticalResizer: document.getElementsByClassName("separator_vertical")[0],
     zoom: document.getElementsByClassName("footer__button_zoom")[0]
 };
-const resultFadeInTime = 1000;
+const resultFadeInDuration = 1000;
 const spinnerAnimationTime = 2000;
 
 
@@ -88,19 +89,28 @@ function createEditor(element) {
 buttons.toggleButton.addEventListener("click", openMobileNavigation);
 
 function openMobileNavigation() {
-    pageElements.navActions.classList.toggle("nav__actions_open");
     buttons.toggleButton.classList.toggle("toggle-button_expanded");
+    pageElements.navActions.classList.toggle("nav__actions_open");
+    toggleFastTransition();
     document.addEventListener("click", closeMobileNavigation);
 }
 function closeMobileNavigation(event) {
     if (event.target.classList[0] && !isNavActions(event.target.classList[0])) {
-        pageElements.navActions.classList.remove("nav__actions_open");
         buttons.toggleButton.classList.remove("toggle-button_expanded");
+        pageElements.navActions.classList.remove("nav__actions_open");
+        toggleFastTransition();
         document.removeEventListener("click", closeMobileNavigation);
     }
 }
 function isNavActions(className) {
     return className.includes("toggle-button") || className.includes("nav__actions");
+}
+function toggleFastTransition() {
+    if (pageElements.navActions.classList.contains("nav__actions_open")) {
+        pageElements.navActions.classList.remove("nav__actions_fast-transition");
+    } else {
+        setTimeout(() => pageElements.navActions.classList.add("nav__actions_fast-transition"), navActionsTransitionDuration);
+    }
 }
 
 
@@ -137,7 +147,7 @@ function hideResult() {
 function showResult() {
     pageElements.resultParentElement.classList.add("editor_animated");
     pageElements.resultParentElement.classList.remove("editor_hidden");
-    setTimeout(() => pageElements.resultParentElement.classList.remove("editor_animated"), resultFadeInTime);
+    setTimeout(() => pageElements.resultParentElement.classList.remove("editor_animated"), resultFadeInDuration);
 }
 
 

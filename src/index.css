@@ -187,6 +187,9 @@ body {
 .nav__actions {
     display: flex;
 }
+.nav__actions_fast-transition {
+    transition-duration: 0s !important;
+}
 .nav__button {
     background: var(--button-border-background);
     border: 3px solid transparent;
