@@ -1229,6 +1229,7 @@ body {
     flex: 1;
     font-family: Monaco, monospace;
     font-size: 14px;
+    line-height: normal;
     min-height: 30px;
     outline: 0;
     overflow: hidden;
