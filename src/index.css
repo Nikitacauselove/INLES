@@ -1035,6 +1035,7 @@ body {
     color: #2c303a;
     font-family: Lato, sans-serif;
     font-size: 13px;
+    line-height: normal;
     outline: none;
     padding: 10px;
     width: 100%;
