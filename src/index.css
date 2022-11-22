@@ -623,6 +623,7 @@ body {
         background: #2c303a;
         border: none;
         border-top: 2px solid var(--button-border-background);
+        font-size: revert;
         margin-right: 1px;
         min-width: 50px;
         padding: 8px 16px;
