@@ -315,7 +315,7 @@ function formHelpMapping(attribute, formHelp) {
             return formHelp[3];
         case "decimal-places":
             return formHelp[4];
-        case "input-a":
+        case "guess-values":
             return formHelp[5];
     }
 }
