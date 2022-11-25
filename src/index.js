@@ -19,6 +19,7 @@ const disableSelection = () => false;
 const enableSelection = () => true;
 const navActionsTransitionDuration = 200;
 const pageElements = {
+    addedForms: [],
     codeMirrors: document.getElementsByClassName("CodeMirror"),
     console: document.getElementsByClassName("console")[0],
     consoleEntries: document.getElementsByClassName("console__entries")[0],
@@ -259,11 +260,14 @@ function formInput(event) {
 /** Добавление форм для начальных значений (guess values). */
 
 function addForms(guessValues) {
+    removeOldForms();
     for (const element of guessValues) {
         const form = createForm(element.name, element.value);
 
         pageElements.formTemplate.parentNode.append(form);
         pageElements.formTemplate.parentNode.lastElementChild.addEventListener("submit", formInput);
+        pageElements.addedForms.push(pageElements.formTemplate.parentNode.lastElementChild);
+        setTimeout(showForm, spinnerAnimationTime, pageElements.formTemplate.parentNode.lastElementChild);
     }
 }
 function createForm(name, value) {
@@ -277,7 +281,17 @@ function createForm(name, value) {
     label.textContent = `Input ${name}`;
     return form;
 }
-
+function removeOldForms() {
+    for (const form of pageElements.addedForms) {
+        form.remove();
+    }
+    pageElements.addedForms = [];
+}
+function showForm(form) {
+    form.classList.add("form_animated");
+    form.classList.remove("form_hidden");
+    setTimeout(() => form.classList.remove("form_animated"), resultFadeInDuration);
+}
 
 /** Открытие/сокрытие подсказок. */
 

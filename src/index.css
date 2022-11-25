@@ -582,7 +582,6 @@ body {
 
 .editor {
     height: 100%;
-    opacity: 1;
     position: relative;
     width: 100%;
 }
@@ -869,6 +868,13 @@ body {
     padding: 1em;
     position: relative;
 }
+.form_animated {
+    animation: show-editor 1s ease;
+}
+.form_hidden {
+    opacity: 0;
+    visibility: hidden;
+}
 .form__title {
     font-size: 1rem;
     line-height: 1.2;
@@ -877,6 +883,7 @@ body {
 }
 .form__label {
     color: inherit;
+    cursor: text;
     font-weight: inherit;
     letter-spacing: inherit;
     margin: 0 0 3px 0;
