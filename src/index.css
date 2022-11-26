@@ -241,6 +241,7 @@ body {
     fill: currentColor;
     height: 16px;
     margin-right: 0.35em;
+    min-height: 1.4em;
     vertical-align: bottom;
     width: 16px;
 }
