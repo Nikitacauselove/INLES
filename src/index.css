@@ -241,7 +241,6 @@ body {
     fill: currentColor;
     height: 16px;
     margin-right: 0.35em;
-    min-height: 1.4em;
     vertical-align: bottom;
     width: 16px;
 }
@@ -273,7 +272,7 @@ body {
         height: 53px;
     }
 
-    .nav__link-container {
+    .nav__icon-container {
         height: 53px;
     }
 }
@@ -332,6 +331,9 @@ body {
         margin: 0 0 0.25rem;
         text-align: left;
         width: 100%;
+    }
+    .nav__button-icon {
+        min-height: 1.4em;
     }
     .nav__button-icon_run {
         display: inline-block;
