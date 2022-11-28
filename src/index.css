@@ -340,8 +340,9 @@ body {
     }
 }
 @media (max-width: 767px) and (orientation: landscape), (max-height: 440px) and (orientation: landscape) {
-    .nav {
+    .header {
         border-bottom: 1px solid var(--button-border-background);
+        box-sizing: content-box;
     }
 }
 @media (max-width: 550px) {
@@ -697,9 +698,19 @@ body {
     }
 }
 @media (max-width: 767px) and (orientation: landscape), (max-height: 440px) and (orientation: landscape) {
+    .main-nav {
+        top: 11px;
+    }
+
     .main__actions {
         height: auto;
         padding-top: 8px;
+    }
+
+    @media (max-width: 550px) {
+        .main-nav {
+            top: 10px;
+        }
     }
 }
 
@@ -1237,6 +1248,9 @@ body {
 }
 .command-line__arrow:before {
     content: '>';
+}
+.command-line__label {
+    line-height: 0;
 }
 .command-line__textarea {
     background: none;
