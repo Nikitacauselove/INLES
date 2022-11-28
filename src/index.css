@@ -1250,13 +1250,13 @@ body {
     content: '>';
 }
 .command-line__label {
+    flex: 1;
     line-height: 0;
 }
 .command-line__textarea {
     background: none;
     border: 0;
     color: white;
-    flex: 1;
     font-family: Monaco, monospace;
     font-size: 14px;
     line-height: normal;
@@ -1265,6 +1265,7 @@ body {
     overflow: hidden;
     padding: 7px 0 7px 7px;
     resize: none;
+    width: 100%;
 }
 
 @media (max-width: 767px), (max-height: 440px) {
