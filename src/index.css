@@ -82,7 +82,7 @@ body {
 .nav__icon {
     display: block;
     height: 100%;
-    width: 100% ;
+    width: 100%;
 }
 .nav__inner-container {
     align-items: center;
@@ -1401,10 +1401,10 @@ body {
     width: 100%;
 }
 .export__button:focus, .export__button:hover {
-     background: #c7c9d3;
-     border-color: #c7c9d3;
-     color: #131417;
- }
+    background: #c7c9d3;
+    border-color: #c7c9d3;
+    color: #131417;
+}
 .export__button-icon {
     display: inline-block;
     fill: var(--header-button-background);
