@@ -954,7 +954,7 @@ body {
 .form-help:before {
     border: 10px solid transparent;
     border-left: 10px solid #5a5f73;
-    content: '';
+    content: "";
     height: 0;
     left: auto;
     margin-right: -24px;
@@ -1247,7 +1247,7 @@ body {
     padding-left: 10px;
 }
 .command-line__arrow:before {
-    content: '>';
+    content: ">";
 }
 .command-line__label {
     flex: 1;
