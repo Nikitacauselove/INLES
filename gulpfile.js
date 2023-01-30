@@ -20,8 +20,7 @@ function hyperTextMarkupLanguage() {
     return src([
         'src/**/Lato-Black.woff2',
         'src/**/Lato-Bold.woff2',
-        'src/index.html',
-        'src/robots.txt'
+        'src/index.html'
     ]).pipe(gulpif('*.html', useref())).pipe(dest('output/'));
 }
 
