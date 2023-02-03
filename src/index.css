@@ -277,6 +277,9 @@ body {
     }
 }
 @media (max-width: 767px), (max-height: 440px) {
+    .nav__icon-container {
+        width: 35px;
+    }
     .nav__title {
         margin: 0;
         font-size: 1rem;
@@ -345,12 +348,6 @@ body {
         box-sizing: content-box;
     }
 }
-@media (max-width: 550px) {
-    .nav__icon-container {
-        width: 20px;
-    }
-}
-
 
 /*                  Main                  */
 
