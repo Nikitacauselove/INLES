@@ -1,3 +1,5 @@
+"use strict"
+
 const buttons = {
     actionButtons: getActionButtons(),
     actionCloseButtons: getActionCloseButtons(),

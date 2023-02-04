@@ -20,6 +20,7 @@ function hyperTextMarkupLanguage() {
     return src([
         'src/**/Lato-Black.woff2',
         'src/**/Lato-Bold.woff2',
+        'src/**/favicon.ico',
         'src/index.html'
     ]).pipe(gulpif('*.html', useref())).pipe(dest('output/'));
 }
