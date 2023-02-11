@@ -13,7 +13,7 @@ function cascadingStyleSheets() {
         'node_modules/normalize.css/normalize.css',
         'node_modules/codemirror/theme/twilight.css',
         'src/index.css'
-    ]).pipe(concat('main.css')).pipe(cleanCSS()).pipe(dest('output/'));
+    ]).pipe(concat('index.css')).pipe(cleanCSS()).pipe(dest('output/'));
 }
 
 function hyperTextMarkupLanguage() {
@@ -33,7 +33,7 @@ function javaScript() {
         'node_modules/codemirror/addon/scroll/simplescrollbars.js',
         'node_modules/codemirror/mode/python/python.js',
         'src/index.js'
-    ]).pipe(concat('main.js')).pipe(uglify()).pipe(dest('output/'));
+    ]).pipe(concat('index.js')).pipe(uglify()).pipe(dest('output/'));
 }
 
 exports.default = parallel(cascadingStyleSheets, hyperTextMarkupLanguage, javaScript);
